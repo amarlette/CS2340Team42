@@ -2,12 +2,12 @@
 
 ## Contact the team!
 * Stephanie Almeida
-.. stephanie.almeida@gatech.edu 
+..<stephanie.almeida@gatech.edu>
 * Tiffany Hsieh
-.. tiffanyxhsieh@gmail.com 
+..<tiffanyxhsieh@gmail.com> 
 * Chidambaram Kadiresan
-.. ckadiresan@gatech.edu
+..<ckadiresan@gatech.edu>
 * Ji Kim
-.. gkim@gatech.edu
+..<gkim@gatech.edu>
 * Alexandra Marlette
-.. amarlette@gatech.edu
+..<amarlette@gatech.edu>
