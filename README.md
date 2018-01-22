@@ -1,8 +1,13 @@
 # Team 42 Space Pistols
 
-Stephanie Almeida 
-Tiffany Hsieh  
-Matthew Jinks 
-Chidambaram Kadiresan
-Ji Kim
-Alexandra Marlette
+## Contact the team!
+* Stephanie Almeida
+.. stephanie.almeida@gatech.edu 
+* Tiffany Hsieh
+.. tiffanyxhsieh@gmail.com 
+* Chidambaram Kadiresan
+.. ckadiresan@gatech.edu
+* Ji Kim
+.. gkim@gatech.edu
+* Alexandra Marlette
+.. amarlette@gatech.edu
