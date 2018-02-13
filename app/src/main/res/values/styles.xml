@@ -33,4 +33,8 @@
         <item name="android:textSize">36sp</item>
     </style>
 
+    <style name="CustomTitle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_margin">10sp</item>
+    </style>
 </resources>
