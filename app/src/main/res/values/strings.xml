@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Homeless Shelter Finder</string>
+    <string name="app_name">BuzzShelter</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -19,6 +19,9 @@
     <string name="signed_out">Signed Out</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="auth_failed">Authentication failed</string>
+    <string name="user_not_found">No user found with that e-mail!</string>
+    <string name="pw_len_req">Password must be at least 6 characters!</string>
+    <string name="user_create_fail">Account creation failed</string>
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
