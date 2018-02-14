@@ -129,19 +129,17 @@ public class LoginActivity extends BaseActivity implements
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             if (task.getException().getClass().equals(FirebaseAuthInvalidUserException.class)) {
-                                Toast.makeText(LoginActivity.this, "No user found with that e-mail!",
+                                Toast.makeText(LoginActivity.this, R.string.user_not_found,
                                         Toast.LENGTH_LONG).show();
+                                mStatusTextView.setText(R.string.user_not_found);
                             } else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
                             }
                             updateUI(null);
                         }
 
                         // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
                         hideProgressDialog();
                         // [END_EXCLUDE]
                     }
