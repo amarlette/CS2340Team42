@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends BaseActivity implements
@@ -85,9 +87,15 @@ public class LoginActivity extends BaseActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException().getClass().equals(FirebaseAuthWeakPasswordException.class)) {
+                                Toast.makeText(LoginActivity.this, "Password must be at least 6 characters!",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Account creation failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             updateUI(null);
+
                         }
 
                         // [START_EXCLUDE]
@@ -120,8 +128,13 @@ public class LoginActivity extends BaseActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException().getClass().equals(FirebaseAuthInvalidUserException.class)) {
+                                Toast.makeText(LoginActivity.this, "No user found with that e-mail!",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             updateUI(null);
                         }
 
