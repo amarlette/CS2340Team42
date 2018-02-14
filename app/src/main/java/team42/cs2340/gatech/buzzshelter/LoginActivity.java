@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity implements
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
+    private boolean signedOut;
     // [END declare_auth]
 
     @Override
@@ -52,6 +53,8 @@ public class LoginActivity extends BaseActivity implements
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        signedOut = false;
     }
 
     // [START on_start_check_user]
@@ -88,11 +91,13 @@ public class LoginActivity extends BaseActivity implements
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             if (task.getException().getClass().equals(FirebaseAuthWeakPasswordException.class)) {
-                                Toast.makeText(LoginActivity.this, "Password must be at least 6 characters!",
+                                Toast.makeText(LoginActivity.this, R.string.pw_len_req,
                                         Toast.LENGTH_SHORT).show();
+                                mStatusTextView.setText(R.string.pw_len_req);
                             } else {
-                                Toast.makeText(LoginActivity.this, "Account creation failed.",
+                                Toast.makeText(LoginActivity.this, R.string.user_create_fail,
                                         Toast.LENGTH_SHORT).show();
+                                mStatusTextView.setText(R.string.user_create_fail);
                             }
                             updateUI(null);
 
@@ -108,6 +113,7 @@ public class LoginActivity extends BaseActivity implements
     }
 
     private void signIn(String email, String password) {
+        signedOut = false;
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -135,6 +141,7 @@ public class LoginActivity extends BaseActivity implements
                             } else {
                                 Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
+                                mStatusTextView.setText(R.string.auth_failed);
                             }
                             updateUI(null);
                         }
@@ -149,6 +156,7 @@ public class LoginActivity extends BaseActivity implements
 
     private void signOut() {
         mAuth.signOut();
+        signedOut = true;
         updateUI(null);
     }
 
@@ -217,13 +225,15 @@ public class LoginActivity extends BaseActivity implements
             findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
 
             findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
-        } else {
+        } else if (signedOut) {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
 
             findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
             findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
             findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);
+        } else {
+            assert true;
         }
     }
 
