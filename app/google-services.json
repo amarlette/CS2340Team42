@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "379183520681",
+    "firebase_url": "https://cs2340team42.firebaseio.com",
+    "project_id": "cs2340team42",
+    "storage_bucket": "cs2340team42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379183520681:android:0204ea32d81104ee",
+        "android_client_info": {
+          "package_name": "team42.cs2340.gatech.buzzshelter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379183520681-qpr5iu07sm7ur42munf3hb5ons6n91l6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team42.cs2340.gatech.buzzshelter",
+            "certificate_hash": "ccdc41cc6ea138c676a33b07ef8e9e7da9320727"
+          }
+        },
+        {
+          "client_id": "379183520681-qmf134tt1vdc03avl6fn2tq6g6totnhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIzlk744HrdxwQ5ffdaj-qLTE9D6dr0hI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379183520681-qmf134tt1vdc03avl6fn2tq6g6totnhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
