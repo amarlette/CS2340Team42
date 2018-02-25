@@ -18,10 +18,12 @@
     <string name="firebaseui_status_fmt">Firebase User: %s</string>
     <string name="signed_out">Signed Out</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="welcome_user">Welcome: %s!</string>
     <string name="auth_failed">Authentication failed</string>
     <string name="user_not_found">No user found with that e-mail!</string>
     <string name="pw_len_req">Password must be at least 6 characters!</string>
     <string name="user_create_fail">Account creation failed</string>
+    <string name="user_exists">A user with that e-mail already exists!</string>
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
@@ -34,5 +36,6 @@
     <string name="label_emailpassword">Email/Password Authentication</string>
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
 
+    <string name="action_settings">Settings</string>
 
 </resources>
