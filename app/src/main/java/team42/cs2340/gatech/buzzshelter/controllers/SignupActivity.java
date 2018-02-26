@@ -1,4 +1,4 @@
-package team42.cs2340.gatech.buzzshelter;
+package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
+import team42.cs2340.gatech.buzzshelter.R;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";

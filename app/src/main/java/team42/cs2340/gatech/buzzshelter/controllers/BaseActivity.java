@@ -1,4 +1,4 @@
-package team42.cs2340.gatech.buzzshelter;
+package team42.cs2340.gatech.buzzshelter.controllers;
 
 /**
  * Created by Tiffany on 2/12/18.
@@ -7,6 +7,8 @@ package team42.cs2340.gatech.buzzshelter;
 import android.app.ProgressDialog;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+
+import team42.cs2340.gatech.buzzshelter.R;
 
 public class BaseActivity extends AppCompatActivity {
 

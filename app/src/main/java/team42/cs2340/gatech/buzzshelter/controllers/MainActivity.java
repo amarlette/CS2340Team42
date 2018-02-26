@@ -1,8 +1,7 @@
-package team42.cs2340.gatech.buzzshelter;
+package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import team42.cs2340.gatech.buzzshelter.R;
 
 
 public class MainActivity extends AppCompatActivity {

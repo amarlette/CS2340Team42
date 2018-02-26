@@ -1,4 +1,4 @@
-package team42.cs2340.gatech.buzzshelter;
+package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
+import team42.cs2340.gatech.buzzshelter.R;
 
 
 import android.support.annotation.NonNull;
