@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+            // TODO: facade logic?  on sign out?  on sign in?
             Model.getInstance();
+
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
@@ -85,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         // TODO: Display name does not persist on app restart
+        // TODO: Link user details with User object rather than directly through db
     }
 }

@@ -60,6 +60,9 @@ public class Model {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
                 Log.d("ADD", shelter.toString());
+                // TODO: check whether coordinates loaded correctly
+                shelters.add(shelter);
+                // may have to be casted to double?
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -76,8 +79,9 @@ public class Model {
      */
     private void loadShelters() {
         // TODO: pull shelters from db, populate shelter list
-        // mDatabase.child()
-        // shelters.add(new Shelter());
+        // likely not necessary, handle above with child listener, real time updates
+        // remove function upon implementation
+
     }
 
     /**
