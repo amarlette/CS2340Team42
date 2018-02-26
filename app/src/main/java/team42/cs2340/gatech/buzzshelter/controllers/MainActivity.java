@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
 
@@ -20,13 +24,24 @@ public class MainActivity extends AppCompatActivity {
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
+    @BindView(R.id.btn_list_shelters) Button _viewSheltersButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
+        _viewSheltersButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                viewShelters();
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -88,5 +103,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         // TODO: Display name does not persist on app restart
         // TODO: Link user details with User object rather than directly through db
+    }
+
+    public void viewShelters() {
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(this, ShelterViewActivity.class);
+            startActivity(intent);
+        }
     }
 }

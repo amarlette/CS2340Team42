@@ -18,42 +18,42 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/StudentName"
+            android:id="@+id/ShelterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Student Name: "
+            android:text="Shelter Name: "
             android:textColor="#000"
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/ShowStudentNameTextView"
+            android:id="@+id/ShowShelterNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Show Student Name"
+            android:text="Show Shelter Name"
             android:textColor="#000"
             android:textSize="20dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/StudentName"
-            android:layout_toEndOf="@+id/StudentName"
+            android:layout_toRightOf="@+id/ShelterName"
+            android:layout_toEndOf="@+id/ShelterName"
             android:layout_marginLeft="19dp"
             android:layout_marginStart="19dp" />
 
         <TextView
-            android:id="@+id/StudentNumber"
+            android:id="@+id/ShelterNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Phone Number: "
             android:textColor="#000"
             android:textSize="20dp"
-            android:layout_below="@+id/StudentName"
+            android:layout_below="@+id/ShelterName"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <TextView
-            android:id="@+id/ShowStudentNumberTextView"
+            android:id="@+id/ShowShelterNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -62,9 +62,9 @@
             android:textSize="20dp"
             android:layout_marginLeft="11dp"
             android:layout_marginStart="11dp"
-            android:layout_below="@+id/ShowStudentNameTextView"
-            android:layout_toRightOf="@+id/StudentNumber"
-            android:layout_toEndOf="@+id/StudentNumber" />
+            android:layout_below="@+id/ShowShelterNameTextView"
+            android:layout_toRightOf="@+id/ShelterNumber"
+            android:layout_toEndOf="@+id/ShelterNumber" />
 
     </RelativeLayout>
 
