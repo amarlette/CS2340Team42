@@ -21,10 +21,10 @@ public class Shelter {
     private String capacity;
 
     /** the shelter's latitude */
-    private String latitude;
+    private double latitude;
 
     /** the shelter's longitude */
-    private String longitude;
+    private double longitude;
 
     /** the shelter's phone number */
     private String phone;
@@ -59,19 +59,19 @@ public class Shelter {
         this.capacity = capacity;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -111,7 +111,7 @@ public class Shelter {
      * @param notes         notes pertaining to the shelter
      */
     public Shelter(String name, String address, String capacity,
-                   String latitude, String longitude, String phone,
+                   double latitude, double longitude, String phone,
                    String restrictions, String notes) {
         this.name = name;
         this.address = address;
@@ -122,6 +122,11 @@ public class Shelter {
         this.restrictions = restrictions;
         this.notes = notes;
     }
+
+    public Shelter() {
+
+    }
+    // TODO: constructor based on map from db
 
     // TODO: functionality to add user to a shelter if space permits (reservation)
 }
