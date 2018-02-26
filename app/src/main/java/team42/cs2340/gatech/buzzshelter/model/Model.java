@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -24,10 +25,10 @@ public class Model {
     /** singleton instance */
     private static final Model instance = new Model();
 
-    /** holds the list of all shelters */
-    private List<Shelter> shelters;
+    /** holds all shelters, mapped to their db key */
+    private HashMap<String, Shelter> shelters;
 
-    /** the currently selected course, defaults to first shelter */
+    /** the currently selected shelter, defaults to first shelter */
     private Shelter currentShelter;
 
     /** access to database */
@@ -36,6 +37,9 @@ public class Model {
     public static Model getInstance() {
         return instance;
     }
+
+    /** current user */
+    private User currentUser;
 
     /**
      * create a new model
@@ -63,7 +67,7 @@ public class Model {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
                 shelter.setKey(dataSnapshot.getKey());
-                shelters.add(shelter);
+                shelters.put(shelter.getKey(), shelter);
                 Log.d("SHELTER", shelter.toString());
                 Log.d("KEY", shelter.getKey());
                 Log.d("LOC", shelter.getLocation().toString());
@@ -74,7 +78,7 @@ public class Model {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-        shelters = new ArrayList<>();
+        shelters = new HashMap<>();
     }
 
     /**
@@ -90,12 +94,12 @@ public class Model {
      * get the shelters
      * @return a list of the shelters in the app
      */
-    public List<Shelter> getShelters() {
+    public HashMap<String, Shelter> getShelters() {
         return shelters;
     }
 
     /**
-     * add a shelter to the app.  checks if duplicate
+     * add a shelter to the app. checks if duplicate
      *
      * @param shelter  the shelter to be added
      * @return true if added, false if a duplicate
@@ -110,7 +114,7 @@ public class Model {
 
     public boolean updateShelter(Shelter shelter) {
 
-        // TODO: update an existing shelter using its db key, admin only
+        // TODO: update an existing shelter using its db key, employee only
         return true;
     }
 
@@ -134,8 +138,16 @@ public class Model {
      * @param user the user to make the request on behalf of
      * @return true if reservation request successful, false otherwise
      */
-//    public boolean addUser(User user) {
+//    public boolean addUserToShelter(User user) {
 //        return user != null && currentShelter.reserve(user);
 //    }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public boolean setCurrentUser(User user) {
+        this.currentUser = user;
+        return true;
+    }
 }
