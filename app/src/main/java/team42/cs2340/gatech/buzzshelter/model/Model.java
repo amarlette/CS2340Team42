@@ -1,9 +1,18 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 import android.support.compat.BuildConfig;
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Facade to model.
@@ -19,6 +28,8 @@ public class Model {
     /** the currently selected course, defaults to first shelter */
     private Shelter currentShelter;
 
+    /** access to database */
+    private DatabaseReference mDatabase;
 
     public static Model getInstance() {
         return instance;
@@ -28,11 +39,25 @@ public class Model {
      * create a new model
      */
     private Model() {
+        // connect to and read from database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference shelterRef = mDatabase.child("shelters");
+        shelterRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
         shelters = new ArrayList<>();
-
-        //comment this out after full app developed -- for homework leave in
         loadShelters();
-
     }
 
     /**
@@ -40,6 +65,7 @@ public class Model {
      */
     private void loadShelters() {
         // TODO: pull shelters from db, populate shelter list
+        // mDatabase.child()
         // shelters.add(new Shelter());
     }
 
@@ -61,6 +87,12 @@ public class Model {
         // TODO: check whether shelter exists (query db real time)
         // TODO: add shelter if not exists
         loadShelters(); // update shelter list with up to date data
+        return true;
+    }
+
+    public boolean updateShelter(Shelter shelter) {
+
+        // TODO: update an existing shelter with new data (db concurrent)
         return true;
     }
 
@@ -88,5 +120,4 @@ public class Model {
 //        return user != null && currentShelter.reserve(user);
 //    }
 
-    // TODO: update an existing shelter with new data (db concurrent)
 }
