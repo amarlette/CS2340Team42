@@ -30,7 +30,7 @@ public class Shelter {
     /** the shelter's longitude */
     private String longitude;
 
-    /** the shelter's location */
+    /** the shelter's location (coordinates) */
     private Location location;
 
     /** the shelter's phone number */
@@ -66,17 +66,9 @@ public class Shelter {
         this.capacity = capacity;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
     public void setLatitude(String latitude) {
         this.latitude = latitude;
         getLocation().setLatitude(Double.parseDouble(latitude));
-    }
-
-    public String getLongitude() {
-        return longitude;
     }
 
     public void setLongitude(String longitude) {

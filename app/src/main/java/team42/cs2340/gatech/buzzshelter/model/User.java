@@ -5,6 +5,12 @@ package team42.cs2340.gatech.buzzshelter.model;
  */
 
 public abstract class User {
-    // user role
     private String name;
+    private String email;
+    private String password;
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
