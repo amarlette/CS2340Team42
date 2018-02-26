@@ -126,7 +126,9 @@ public class Shelter {
     public Shelter() {
 
     }
-    // TODO: constructor based on map from db
 
+    public String toString() {
+        return this.name + " @ " + this.address;
+    }
     // TODO: functionality to add user to a shelter if space permits (reservation)
 }
