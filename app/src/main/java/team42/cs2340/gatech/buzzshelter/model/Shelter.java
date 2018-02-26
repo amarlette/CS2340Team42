@@ -1,5 +1,6 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +12,9 @@ import java.util.List;
  */
 
 public class Shelter {
+    /** this shelter's firebase key */
+    private String key;
+
     /** this shelter's name */
     private String name;
 
@@ -21,10 +25,13 @@ public class Shelter {
     private String capacity;
 
     /** the shelter's latitude */
-    private double latitude;
+    private String latitude;
 
     /** the shelter's longitude */
-    private double longitude;
+    private String longitude;
+
+    /** the shelter's location */
+    private Location location;
 
     /** the shelter's phone number */
     private String phone;
@@ -59,20 +66,29 @@ public class Shelter {
         this.capacity = capacity;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
+        getLocation().setLatitude(Double.parseDouble(latitude));
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
+        getLocation().setLongitude(Double.parseDouble(longitude));
+    }
+
+    public Location getLocation() {
+        if (location == null) {
+            this.location = new Location("");
+        }
+        return location;
     }
 
     public String getPhone() {
@@ -99,6 +115,14 @@ public class Shelter {
         this.notes = notes;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     /**
      * Create a new shelter
      * @param name          the shelter's name
@@ -111,7 +135,7 @@ public class Shelter {
      * @param notes         notes pertaining to the shelter
      */
     public Shelter(String name, String address, String capacity,
-                   double latitude, double longitude, String phone,
+                   String latitude, String longitude, String phone,
                    String restrictions, String notes) {
         this.name = name;
         this.address = address;

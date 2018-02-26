@@ -1,5 +1,6 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
+import android.location.Location;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
@@ -40,6 +41,8 @@ public class Model {
      * create a new model
      */
     private Model() {
+        // TODO: move login logic here
+        // TODO: read from database only if logged in
         // connect to and read from database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference shelterRef = mDatabase.child("shelters");
@@ -59,10 +62,11 @@ public class Model {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
-                Log.d("ADD", shelter.toString());
-                // TODO: check whether coordinates loaded correctly
+                shelter.setKey(dataSnapshot.getKey());
                 shelters.add(shelter);
-                // may have to be casted to double?
+                Log.d("SHELTER", shelter.toString());
+                Log.d("KEY", shelter.getKey());
+                Log.d("LOC", shelter.getLocation().toString());
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -71,7 +75,6 @@ public class Model {
             }
         });
         shelters = new ArrayList<>();
-        loadShelters();
     }
 
     /**
@@ -81,7 +84,6 @@ public class Model {
         // TODO: pull shelters from db, populate shelter list
         // likely not necessary, handle above with child listener, real time updates
         // remove function upon implementation
-
     }
 
     /**
@@ -93,21 +95,22 @@ public class Model {
     }
 
     /**
-     * add a shelter to the app.  checks if the course is already entered
+     * add a shelter to the app.  checks if duplicate
      *
      * @param shelter  the shelter to be added
      * @return true if added, false if a duplicate
      */
     public boolean addShelter(Shelter shelter) {
         // TODO: check whether shelter exists (query db real time)
-        // TODO: add shelter if not exists
+        // TODO: add shelter if not exists, admin only
+
         loadShelters(); // update shelter list with up to date data
         return true;
     }
 
     public boolean updateShelter(Shelter shelter) {
 
-        // TODO: update an existing shelter with new data (db concurrent)
+        // TODO: update an existing shelter using its db key, admin only
         return true;
     }
 
