@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import team42.cs2340.gatech.buzzshelter.R;
+import team42.cs2340.gatech.buzzshelter.model.Model;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,15 +28,17 @@ public class MainActivity extends AppCompatActivity {
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
         mAuth = FirebaseAuth.getInstance();
-
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
     @Override
     public void onResume() {
         super.onResume();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+            Model.getInstance();
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
@@ -72,11 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void signOut() {
         mAuth.signOut();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Intent intent = new Intent(this, LoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+//                Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        finish();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
+        // TODO: Display name does not persist on app restart
     }
 }

@@ -3,6 +3,7 @@ package team42.cs2340.gatech.buzzshelter.model;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,14 +43,24 @@ public class Model {
         // connect to and read from database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference shelterRef = mDatabase.child("shelters");
-        shelterRef.addValueEventListener(new ValueEventListener() {
+        shelterRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
             }
-
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+            }
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+                Log.d("ADD", shelter.toString());
+            }
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
