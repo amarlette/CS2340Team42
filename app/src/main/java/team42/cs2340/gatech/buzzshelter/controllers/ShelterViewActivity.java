@@ -61,7 +61,7 @@ public class ShelterViewActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     Shelter shelterDetails = dataSnapshot.getValue(Shelter.class);
-
+                    shelterDetails.setKey(dataSnapshot.getKey());
                     list.add(shelterDetails);
                 }
 

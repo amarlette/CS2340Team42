@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controllers.LoginActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".controllers.ShelterDetailViewActivity" android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".controllers.SignupActivity" android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".controllers.ShelterViewActivity"/>
     </application>

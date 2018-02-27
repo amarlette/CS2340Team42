@@ -5,7 +5,9 @@ package team42.cs2340.gatech.buzzshelter.controllers;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import team42.cs2340.gatech.buzzshelter.R;
+import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.Shelter;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -39,14 +42,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Shelter shelterDetails = MainImageUploadInfoList.get(position);
+        holder.shelterDetails = MainImageUploadInfoList.get(position);
 
-        holder.ShelterNameTextView.setText(shelterDetails.getName());
+        holder.ShelterNameTextView.setText(holder.shelterDetails.getName());
 
-        holder.ShelterPhoneTextView.setText(shelterDetails.getPhone());
+        holder.ShelterPhoneTextView.setText(holder.shelterDetails.getPhone());
 
+        holder.ShelterBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, ShelterDetailViewActivity.class);
+                Model.getInstance().setCurrentShelter(holder.shelterDetails);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,17 +68,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        public View ShelterBlock;
         public TextView ShelterNameTextView;
         public TextView ShelterPhoneTextView;
+        public Shelter shelterDetails;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
+            ShelterBlock = itemView;
 
-            ShelterNameTextView = (TextView) itemView.findViewById(R.id.ShowShelterNameTextView);
+            ShelterNameTextView = itemView.findViewById(R.id.ShowShelterNameTextView);
 
-            ShelterPhoneTextView = (TextView) itemView.findViewById(R.id.ShowShelterNumberTextView);
+            ShelterPhoneTextView = itemView.findViewById(R.id.ShowShelterNumberTextView);
         }
     }
 }
