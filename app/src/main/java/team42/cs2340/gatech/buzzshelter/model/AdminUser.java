@@ -5,7 +5,7 @@ package team42.cs2340.gatech.buzzshelter.model;
  */
 
 public class AdminUser extends User {
-    public AdminUser(String email, String password) {
-        super(email, password);
+    public AdminUser(String name, String email, String password) {
+        super(name, email, password);
     }
 }
