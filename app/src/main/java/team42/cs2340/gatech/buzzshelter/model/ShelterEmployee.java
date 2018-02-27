@@ -5,7 +5,7 @@ package team42.cs2340.gatech.buzzshelter.model;
  */
 
 public class ShelterEmployee extends User {
-    public ShelterEmployee(String email, String password) {
-        super(email, password);
+    public ShelterEmployee(String name, String email, String password) {
+        super(name, email, password);
     }
 }

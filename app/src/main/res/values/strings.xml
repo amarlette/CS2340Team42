@@ -37,5 +37,11 @@
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="role_types">
+        <item>basic</item>
+        <item>employee</item>
+        <item>admin</item>
+    </string-array>
+
 
 </resources>
