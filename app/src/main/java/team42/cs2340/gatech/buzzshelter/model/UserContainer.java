@@ -10,6 +10,7 @@ public class UserContainer {
     public String role;
     public String gender;
     public Integer age;
+    // ... more attributes for db
 
     public UserContainer(User user) {
         this.name = user.getName();

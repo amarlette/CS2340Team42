@@ -4,6 +4,9 @@ import android.location.Location;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +37,8 @@ public class Model {
     /** access to database */
     private DatabaseReference mDatabase;
 
+    private FirebaseAuth mAuth;
+
     public static Model getInstance() {
         return instance;
     }
@@ -45,10 +50,11 @@ public class Model {
      * create a new model
      */
     private Model() {
-        // TODO: move login logic here
         // TODO: read from database only if logged in
         // connect to and read from database
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
         DatabaseReference shelterRef = mDatabase.child("shelters");
         shelterRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -132,12 +138,12 @@ public class Model {
 
     // TODO: get shelter by its details (search)
 
-    /**
-     * make a reservation on behalf of a user for the current shelter
-     *
-     * @param user the user to make the request on behalf of
-     * @return true if reservation request successful, false otherwise
-     */
+//    /**
+//     * make a reservation on behalf of a user for the current shelter
+//     *
+//     * @param user the user to make the request on behalf of
+//     * @return true if reservation request successful, false otherwise
+//     */
 //    public boolean addUserToShelter(User user) {
 //        return user != null && currentShelter.reserve(user);
 //    }
@@ -150,4 +156,26 @@ public class Model {
         this.currentUser = user;
         return true;
     }
+
+    public void setCurrentUser(DataSnapshot dataSnapshot) {
+        UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
+        User user;
+        String uid = mAuth.getCurrentUser().getUid();
+
+        if (userDetails.role.equals("admin")) {
+            user = new AdminUser(uid, userDetails.name, userDetails.email);
+        } else if (userDetails.role.equals("employee")) {
+            user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
+        } else {
+            user = new BasicUser(uid, userDetails.name, userDetails.email);
+        }
+        this.currentUser = user;
+    }
+
+    public void signoutUser() {
+        mAuth.signOut();
+        currentUser = null;
+        currentShelter = null;
+    }
+
 }
