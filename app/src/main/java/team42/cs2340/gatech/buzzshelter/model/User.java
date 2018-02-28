@@ -5,14 +5,16 @@ package team42.cs2340.gatech.buzzshelter.model;
  */
 
 public abstract class User {
+    /** user's key in user db table */
+    private String uid;
+
     private String name;
     private String email;
-    private String password;
 
-    public User(String name, String email, String password) {
+    public User(String uid, String name, String email) {
+        this.uid = uid;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
     public String getName() {
@@ -21,5 +23,9 @@ public abstract class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

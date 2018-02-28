@@ -7,7 +7,7 @@ package team42.cs2340.gatech.buzzshelter.model;
 public class BasicUser extends User {
     private boolean accountLocked;
 
-    public BasicUser(String name, String email, String password) {
-        super(name, email, password);
+    public BasicUser(String uid, String name, String email) {
+        super(uid, name, email);
     }
 }
