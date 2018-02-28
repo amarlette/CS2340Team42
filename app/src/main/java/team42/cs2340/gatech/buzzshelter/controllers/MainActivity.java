@@ -9,13 +9,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
@@ -26,15 +19,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
+    private Model model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        model = Model.getInstance();
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() == null) {
+        if (model.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -42,33 +37,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            // TODO: facade logic?  on sign out?  on sign in?
-            Model.getInstance();
-
-            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+        if (model.getCurrentUser() != null) {
+            mStatusTextView.setText(model.getCurrentUser().getEmail());
+            mDetailTextView.setText(getString(R.string.firebase_status_fmt, model.getCurrentUser().getUid()));
             mDetailTextView.append("\n");
-            mDetailTextView.append(getString(R.string.welcome_user, user.getDisplayName()));
+            mDetailTextView.append(getString(R.string.welcome_user, model.getCurrentUser().getName()));
 
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
-            DatabaseReference ref = userRef.child("role");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String value = (String) dataSnapshot.getValue();
-                    mDetailTextView.append("\nYou are a: ");
-                    mDetailTextView.append(value);
-                    mDetailTextView.append(" User!");
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-
-                }
-            });
+            mDetailTextView.append("\nYou are a: ");
+            mDetailTextView.append(model.getCurrentUser().getClass().toString());
         }
     }
     @Override
@@ -99,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
-        mAuth.signOut();
+        model.signoutUser();
 //        Intent intent = new Intent(this, LoginActivity.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
 //                Intent.FLAG_ACTIVITY_CLEAR_TASK |
@@ -109,7 +85,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        // TODO: Display name does not persist on app restart
-        // TODO: Link user details with User object rather than directly through db
     }
 }
