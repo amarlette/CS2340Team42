@@ -30,6 +30,7 @@ import butterknife.BindView;
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.AdminUser;
 import team42.cs2340.gatech.buzzshelter.model.BasicUser;
+import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.ShelterEmployee;
 import team42.cs2340.gatech.buzzshelter.model.User;
 import team42.cs2340.gatech.buzzshelter.model.UserContainer;
@@ -38,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     private FirebaseAuth mAuth;
+    private Model model;
 
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_email) EditText _emailText;
@@ -52,6 +54,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
+        model = Model.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +111,6 @@ public class SignupActivity extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             _passwordText.getText().clear();
-                            // updateUI(user);
 
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(name)
@@ -119,7 +121,6 @@ public class SignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Log.d(TAG, "User profile updated.");
                                                 onSignupSuccess();
                                             }
                                         }
@@ -129,16 +130,17 @@ public class SignupActivity extends AppCompatActivity {
 
                             User currentUser;
                             if (_userType.getSelectedItem().equals("admin")) {
-                                currentUser = new AdminUser(name, email, password);
+                                currentUser = new AdminUser(mAuth.getCurrentUser().getUid(), name, email);
                             } else if (_userType.getSelectedItem().equals("employee")) {
-                                currentUser = new ShelterEmployee(name, email, password);
+                                currentUser = new ShelterEmployee(mAuth.getCurrentUser().getUid(), name, email);
                             } else {
-                                currentUser = new BasicUser(name, email, password);
+                                currentUser = new BasicUser(mAuth.getCurrentUser().getUid(), name, email);
                             }
 
                             UserContainer userDetails = new UserContainer(currentUser);
                             userMap.put(user.getUid(), userDetails); // additional details
-                            userRef.updateChildren(userMap);
+                            userRef.updateChildren(userMap); // add new user to database
+                            model.setCurrentUser(currentUser);
                         } else {
                             progressDialog.dismiss();
                             // If sign up fails, display a message to the user.
@@ -150,13 +152,8 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(SignupActivity.this, R.string.user_create_fail,
                                         Toast.LENGTH_SHORT).show();
                             }
-                            // updateUI(null);
                             onSignupFailed();
                         }
-
-                        // [START_EXCLUDE]
-                        // hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
 
                 });
