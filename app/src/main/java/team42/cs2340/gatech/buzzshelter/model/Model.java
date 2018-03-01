@@ -59,24 +59,23 @@ public class Model {
         shelterRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+                shelters.remove(dataSnapshot.getKey());
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
+                shelter.setKey(dataSnapshot.getKey());
+                shelters.put(shelter.getKey(), shelter);
             }
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+
             }
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
                 shelter.setKey(dataSnapshot.getKey());
                 shelters.put(shelter.getKey(), shelter);
-                Log.d("SHELTER", shelter.toString());
-                Log.d("KEY", shelter.getKey());
-                Log.d("LOC", shelter.getLocation().toString());
             }
             @Override
             public void onCancelled(DatabaseError error) {

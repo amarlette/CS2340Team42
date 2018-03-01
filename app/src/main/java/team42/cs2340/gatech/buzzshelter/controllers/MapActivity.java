@@ -17,6 +17,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import java.util.HashMap;
 
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
@@ -27,12 +30,14 @@ import team42.cs2340.gatech.buzzshelter.model.Shelter;
  */
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Model model;
-
+    private HashMap<Marker, Shelter> markers;
+    private GoogleMap targetMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         model = Model.getInstance();
+        markers = new HashMap<>();
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -41,11 +46,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.targetMap = map;
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                Log.d("MAP", markers.get(marker).toString());
+                targetMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(final Marker marker) {
+                Log.d("MAP", "SCREEN TRANSITION");
+                Log.d("MAP", markers.get(marker).toString());
+            }
+        });
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Shelter shelter : model.getShelters().values()) {
             Location loc = shelter.getLocation();
             LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
-            map.addMarker(new MarkerOptions().position(pos).title(shelter.getName()));
+            Marker marker = map.addMarker(new MarkerOptions().position(pos)
+                    .title(shelter.getName())
+                    .snippet(shelter.getPhone()));
+            markers.put(marker, shelter);
             builder.include(pos);
         }
         LatLngBounds bounds = builder.build();
