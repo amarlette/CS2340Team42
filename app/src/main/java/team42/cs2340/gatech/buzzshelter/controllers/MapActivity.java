@@ -1,5 +1,7 @@
 package team42.cs2340.gatech.buzzshelter.controllers;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,17 +47,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag("myFragmentTag");
-        if (fragment == null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            fragment = new ShelterListFragment();
-//            ft.add(android.R.id.content, fragment,"myFragmentTag");
-//            ft.commit();
-            fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment).commit();
-
-        }
     }
 
     @Override
@@ -73,8 +64,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(final Marker marker) {
-                Log.d("MAP", "SCREEN TRANSITION");
-                Log.d("MAP", markers.get(marker).toString());
+                Model.getInstance().setCurrentShelter(markers.get(marker));
+                Intent intent = new Intent(MapActivity.this, ShelterViewActivity.class);
+                startActivity(intent);
             }
         });
         LatLngBounds.Builder builder = new LatLngBounds.Builder();

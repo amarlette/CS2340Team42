@@ -22,6 +22,8 @@ public class ShelterViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // TODO: replace the activity_main with a dedicated screen for shelter detailed view
+        // TODO: create the detailed shelter view screen
 
         model = Model.getInstance();
         mStatusTextView = findViewById(R.id.status);

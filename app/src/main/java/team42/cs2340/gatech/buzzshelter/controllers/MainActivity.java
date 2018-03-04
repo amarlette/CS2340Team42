@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.view_shelters) {
+            startActivity(new Intent(this, ShelterListActivity.class));
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
