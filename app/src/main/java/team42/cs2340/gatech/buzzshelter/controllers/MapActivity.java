@@ -1,6 +1,9 @@
 package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.location.Location;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -42,6 +45,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag("myFragmentTag");
+        if (fragment == null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            fragment = new ShelterListFragment();
+//            ft.add(android.R.id.content, fragment,"myFragmentTag");
+//            ft.commit();
+            fm.beginTransaction()
+                    .add(R.id.fragment_container, fragment).commit();
+
+        }
     }
 
     @Override
@@ -64,7 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (Shelter shelter : model.getShelters().values()) {
+        for (Shelter shelter : model.getShelters()) {
             Location loc = shelter.getLocation();
             LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
             Marker marker = map.addMarker(new MarkerOptions().position(pos)
