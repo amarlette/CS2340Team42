@@ -15,7 +15,6 @@ import team42.cs2340.gatech.buzzshelter.model.Model;
 
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         model = Model.getInstance();
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
-        mAuth = FirebaseAuth.getInstance();
         if (model.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

@@ -99,8 +99,8 @@ public class Model {
      * get the shelters
      * @return a list of the shelters in the app
      */
-    public HashMap<String, Shelter> getShelters() {
-        return shelters;
+    public ArrayList<Shelter> getShelters() {
+        return new ArrayList<>(shelters.values());
     }
 
     /**
