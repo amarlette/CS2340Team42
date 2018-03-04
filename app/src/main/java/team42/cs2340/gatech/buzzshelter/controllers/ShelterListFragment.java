@@ -40,7 +40,7 @@ public class ShelterListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_map, container, false);
+        View rootView = inflater.inflate(R.layout.list_shelter, container, false);
         View recyclerView = rootView.findViewById(R.id.shelter_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);

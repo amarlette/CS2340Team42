@@ -38,6 +38,7 @@
 
     <string name="map_api_key">AIzaSyACUTh4LKyNkAjW-hzpmpZzkgIrU8sxhZE</string>
     <string name="view_map">View Map</string>
+    <string name="view_shelters">View Shelters</string>
     <string-array name="role_types">
         <item>basic</item>
         <item>employee</item>
