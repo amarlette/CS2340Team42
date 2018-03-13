@@ -80,7 +80,7 @@ public class ShelterViewActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        query = databaseReference.child("shelters").orderByValue();
+        query = databaseReference.child("shelters").orderByChild("name");
 
 
         _searchShelterButton.setOnClickListener(new View.OnClickListener() {
@@ -196,8 +196,40 @@ public class ShelterViewActivity extends AppCompatActivity {
         }
     public void searchShelters() {
         Log.d("******","****SEARCH SHELTERS****");
-        query = databaseReference.orderByChild("name").startAt(_searchView.getQuery().toString()).endAt(_searchView.getQuery().toString()+"\uf8ff");
+        Log.d("input",_searchView.getQuery().toString());
+        query = databaseReference.child("shelters").orderByChild("name").startAt(_searchView.getQuery().toString()).endAt(_searchView.getQuery().toString()+"\uf8ff");
+        fadapter.cleanup();
 
+
+        fadapter = new FirebaseRecyclerAdapter<Shelter, SheltersHolder>(
+                Shelter.class,
+                R.layout.recyclerview_items,
+                SheltersHolder.class,
+                query
+        ) {
+            public SheltersHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.recyclerview_items, parent, false);
+
+                Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
+                return new SheltersHolder(view);
+            }
+            @Override
+            protected void populateViewHolder(SheltersHolder viewHolder, Shelter model, int position) {
+                viewHolder.setDetails(getApplicationContext(), model.getName(), model.getPhone());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                super.onCancelled(error);
+                progressDialog.cancel();
+            }
+        };
+
+        recyclerView.setAdapter(fadapter);
     }
     public void filterShelters(){
         //TODO: handle null cases
