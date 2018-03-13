@@ -34,15 +34,18 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/filter_male"
         android:text="Male" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/filter_female"
         android:text="Female"/>
 
 
 </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,6 +74,12 @@
             android:id="@+id/filter_young_adults_checkbox"/>
 
     </LinearLayout>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Anyone"
+        android:id="@+id/filter_anyone"
+        />
 
     <Button
         android:layout_width="wrap_content"

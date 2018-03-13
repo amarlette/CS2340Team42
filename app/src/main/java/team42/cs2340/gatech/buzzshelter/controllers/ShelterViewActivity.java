@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -45,17 +45,18 @@ public class ShelterViewActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-    RecyclerView.Adapter adapter;
-
     Query query;
 
     FirebaseRecyclerAdapter<Shelter,SheltersHolder> fadapter;
 
     @BindView(R.id.search_shelter_button) Button _searchShelterButton;
     @BindView(R.id.filter_shelters_button) Button _filterSheltersButton;
+    @BindView(R.id.filter_male) CheckBox _filterMale;
+    @BindView(R.id.filter_female) CheckBox _filterFemale;
     @BindView(R.id.filter_children_checkbox) CheckBox _filterChildrenCheckBox;
     @BindView(R.id.filter_newborns_checkbox) CheckBox _filterNewBornsCheckbox;
     @BindView(R.id.filter_young_adults_checkbox) CheckBox _filterYoungAdultsCheckbox;
+    @BindView(R.id.filter_anyone) CheckBox _filterAnyone;
     @BindView(R.id.search_view) SearchView _searchView;
 
 
@@ -92,7 +93,7 @@ public class ShelterViewActivity extends AppCompatActivity {
 
 
 
-        /*
+
         _filterSheltersButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -100,7 +101,6 @@ public class ShelterViewActivity extends AppCompatActivity {
                 filterShelters();
             }
         });
-        */
 
 
 
@@ -137,35 +137,6 @@ public class ShelterViewActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(fadapter);
 
-        /*
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                    Shelter shelterDetails = dataSnapshot.getValue(Shelter.class);
-                    shelterDetails.setKey(dataSnapshot.getKey());
-                    list.add(shelterDetails);
-                }
-
-                //adapter = new RecyclerViewAdapter(ShelterViewActivity.this, list);
-
-                recyclerView.setAdapter(fadapter);
-
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                progressDialog.dismiss();
-
-            }
-
-
-        });
-        */
 
     }
 
@@ -232,7 +203,59 @@ public class ShelterViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(fadapter);
     }
     public void filterShelters(){
-        //TODO: handle null cases
+        Log.d("input", "****FILTER SHELTERS**");
+        if (_filterMale.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsMen").equalTo(true);
+        }
+        else if (_filterFemale.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsWomen").equalTo(true);
+        }
+        else if (_filterNewBornsCheckbox.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsNewborns").equalTo(true);
+        }
+        else if (_filterYoungAdultsCheckbox.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsYoungAdults").equalTo(true);
+        }
+        else if (_filterChildrenCheckBox.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsChildren").equalTo(true);
+        }
+        else if (_filterAnyone.isChecked()) {
+            query = databaseReference.child("shelters").orderByChild("allowsAnyone").equalTo(true);
+        }
+
+        fadapter.cleanup();
+
+
+        fadapter = new FirebaseRecyclerAdapter<Shelter, SheltersHolder>(
+                Shelter.class,
+                R.layout.recyclerview_items,
+                SheltersHolder.class,
+                query
+        ) {
+            public SheltersHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.recyclerview_items, parent, false);
+
+                Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
+                return new SheltersHolder(view);
+            }
+
+            @Override
+            protected void populateViewHolder(SheltersHolder viewHolder, Shelter model, int position) {
+                viewHolder.setDetails(getApplicationContext(), model.getName(), model.getPhone());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                super.onCancelled(error);
+                progressDialog.cancel();
+            }
+
+        };
+        recyclerView.setAdapter(fadapter);
 
     }
 
