@@ -2,6 +2,7 @@ package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team42.cs2340.gatech.buzzshelter.R;
+import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.Shelter;
 
 /**
@@ -145,13 +147,28 @@ public class ShelterViewActivity extends AppCompatActivity {
         fadapter.startListening();
     }
 
-    public static class SheltersHolder extends RecyclerView.ViewHolder {
+    public class SheltersHolder extends RecyclerView.ViewHolder {
         View mView;
 
         public SheltersHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
+
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, ShelterDetailViewActivity.class);
+
+                    // how to get actual Shelter, instead of database ref?
+                    Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
+
+                    context.startActivity(intent);
+                }
+            });
+
+
         }
 
 
@@ -184,6 +201,7 @@ public class ShelterViewActivity extends AppCompatActivity {
                         .inflate(R.layout.recyclerview_items, parent, false);
 
                 Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
+
                 return new SheltersHolder(view);
             }
             @Override
@@ -237,6 +255,7 @@ public class ShelterViewActivity extends AppCompatActivity {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.recyclerview_items, parent, false);
 
+
                 Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
                 return new SheltersHolder(view);
             }
@@ -244,6 +263,9 @@ public class ShelterViewActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(SheltersHolder viewHolder, Shelter model, int position) {
                 viewHolder.setDetails(getApplicationContext(), model.getName(), model.getPhone());
+
+
+
 
 
             }
@@ -258,6 +280,7 @@ public class ShelterViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(fadapter);
 
     }
+
 
 
 
