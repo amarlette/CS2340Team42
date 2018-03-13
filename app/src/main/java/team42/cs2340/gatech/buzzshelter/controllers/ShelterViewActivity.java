@@ -70,22 +70,15 @@ public class ShelterViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(ShelterViewActivity.this));
-
         progressDialog = new ProgressDialog(ShelterViewActivity.this);
-
         progressDialog.setMessage("Loading Data from Firebase Database");
-
         progressDialog.show();
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
         query = databaseReference.child("shelters").orderByChild("name");
 
-
+        //Search shelters on button press
         _searchShelterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,8 +87,7 @@ public class ShelterViewActivity extends AppCompatActivity {
         });
 
 
-
-
+        //Filter shelters on button press
         _filterSheltersButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -104,37 +96,7 @@ public class ShelterViewActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        fadapter = new FirebaseRecyclerAdapter<Shelter, SheltersHolder>(
-                Shelter.class,
-                R.layout.recyclerview_items,
-                SheltersHolder.class,
-                query
-                ) {
-            public SheltersHolder onCreateViewHolder(ViewGroup parent,int viewType) {
-
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.recyclerview_items, parent, false);
-
-                Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
-                return new SheltersHolder(view);
-            }
-            @Override
-            protected void populateViewHolder(SheltersHolder viewHolder, Shelter model, int position) {
-                viewHolder.setDetails(getApplicationContext(), model.getName(), model.getPhone());
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                super.onCancelled(error);
-                progressDialog.cancel();
-            }
-        };
-
+        fadapter = createAdapter();
         fadapter.startListening();
 
         recyclerView.setAdapter(fadapter);
@@ -148,78 +110,24 @@ public class ShelterViewActivity extends AppCompatActivity {
         fadapter.startListening();
     }
 
-    public class SheltersHolder extends RecyclerView.ViewHolder {
-        View mView;
 
-        public SheltersHolder(View itemView) {
-            super(itemView);
-
-            mView = itemView;
-
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, ShelterDetailViewActivity.class);
-
-                    Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
-
-                    context.startActivity(intent);
-                }
-            });
-
-
-        }
-
-
-        public void setDetails(Context ctx, String shelterName, String shelterPhone){
-            TextView shelter_name = mView.findViewById(R.id.ShowShelterNameTextView);
-            TextView shelter_number = mView.findViewById(R.id.ShowShelterNumberTextView);
-
-            shelter_name.setText(shelterName);
-            shelter_number.setText(shelterPhone);
-        }
-
-
-        }
+    /**
+     * Creates a query to search for shelters matching the inputted text from the search view
+     */
     public void searchShelters() {
         Log.d("******","****SEARCH SHELTERS****");
         Log.d("input",_searchView.getQuery().toString());
+
         query = databaseReference.child("shelters").orderByChild("name").startAt(_searchView.getQuery().toString()).endAt(_searchView.getQuery().toString()+"\uf8ff");
         fadapter.cleanup();
 
-
-        fadapter = new FirebaseRecyclerAdapter<Shelter, SheltersHolder>(
-                Shelter.class,
-                R.layout.recyclerview_items,
-                SheltersHolder.class,
-                query
-        ) {
-            public SheltersHolder onCreateViewHolder(ViewGroup parent,int viewType) {
-
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.recyclerview_items, parent, false);
-
-                Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
-
-                return new SheltersHolder(view);
-            }
-            @Override
-            protected void populateViewHolder(SheltersHolder viewHolder, Shelter model, int position) {
-                viewHolder.setDetails(getApplicationContext(), model.getName(), model.getPhone());
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                super.onCancelled(error);
-                progressDialog.cancel();
-            }
-        };
-
-        recyclerView.setAdapter(fadapter);
+        //creates new adapter w/ updated adapter
+        recyclerView.setAdapter(createAdapter());
     }
+
+    /**
+     * Creates a query to search for shelters based on checkboxes
+     */
     public void filterShelters(){
         Log.d("input", "****FILTER SHELTERS**");
         if (_filterMale.isChecked()) {
@@ -243,7 +151,17 @@ public class ShelterViewActivity extends AppCompatActivity {
 
         fadapter.cleanup();
 
+        //creates new adapter w/ updated query
+        recyclerView.setAdapter(createAdapter());
 
+    }
+
+
+    /**
+     * Creates a new recycler adapter for new search queries
+     * @return a FirebaseUI Recycler Adapter with the updated query
+     */
+    private FirebaseRecyclerAdapter<Shelter, SheltersHolder> createAdapter() {
         fadapter = new FirebaseRecyclerAdapter<Shelter, SheltersHolder>(
                 Shelter.class,
                 R.layout.recyclerview_items,
@@ -257,7 +175,7 @@ public class ShelterViewActivity extends AppCompatActivity {
 
 
                 Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
-                return new SheltersHolder(view);
+                return new SheltersHolder(view,fadapter);
             }
 
             @Override
@@ -277,8 +195,8 @@ public class ShelterViewActivity extends AppCompatActivity {
             }
 
         };
-        recyclerView.setAdapter(fadapter);
 
+        return fadapter;
     }
 
 
