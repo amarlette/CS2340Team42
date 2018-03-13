@@ -138,6 +138,7 @@ public class ShelterViewActivity extends AppCompatActivity {
         fadapter.startListening();
 
         recyclerView.setAdapter(fadapter);
+        progressDialog.cancel();
 
 
     }
@@ -161,7 +162,6 @@ public class ShelterViewActivity extends AppCompatActivity {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, ShelterDetailViewActivity.class);
 
-                    // how to get actual Shelter, instead of database ref?
                     Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
 
                     context.startActivity(intent);
