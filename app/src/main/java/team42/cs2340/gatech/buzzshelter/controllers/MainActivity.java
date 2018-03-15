@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import team42.cs2340.gatech.buzzshelter.R;
+import team42.cs2340.gatech.buzzshelter.model.BasicUser;
 import team42.cs2340.gatech.buzzshelter.model.Model;
 
 
@@ -43,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
             mDetailTextView.append("\nYou are a: ");
             mDetailTextView.append(model.getCurrentUser().getClass().toString());
+
+            mDetailTextView.append("\n You currently have ");
+            if (model.getCurrentUser() instanceof BasicUser) {
+                BasicUser user = (BasicUser) model.getCurrentUser();
+                mDetailTextView.append(Integer.toString(user.getNumReservations()));
+                mDetailTextView.append(" reservations");
+                if (user.getNumReservations() > 0) {
+                    mDetailTextView.append(" at ");
+                    mDetailTextView.append(model.getShelterDictionary().get(user.getCurrentShelterId()).getName());
+                }
+            }
         }
     }
     @Override
