@@ -42,6 +42,8 @@ public class Shelter {
     /** notes pertaining to this shelter */
     private String notes;
 
+    // TODO: add fields and getters/setters for allowances (women, newborns, etc.) in order to remove ClassMapper Warning
+
     public String getName() {
         return name;
     }

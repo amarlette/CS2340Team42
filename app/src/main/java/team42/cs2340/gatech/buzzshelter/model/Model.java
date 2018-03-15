@@ -31,6 +31,9 @@ public class Model {
     /** holds all shelters, mapped to their db key */
     private HashMap<String, Shelter> shelters;
 
+    /** holds the current filtered list of shelters */
+    private List<Shelter> filteredShelters;
+
     /** the currently selected shelter, defaults to first shelter */
     private Shelter currentShelter;
 
@@ -54,6 +57,7 @@ public class Model {
         // connect to and read from database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        filteredShelters = null;
 
         DatabaseReference shelterRef = mDatabase.child("shelters");
         shelterRef.addChildEventListener(new ChildEventListener() {
@@ -177,4 +181,11 @@ public class Model {
         currentShelter = null;
     }
 
+    public void setFilteredShelters(List<Shelter> filteredShelters) {
+        this.filteredShelters = filteredShelters;
+    }
+
+    public List<Shelter> getFilteredShelters() {
+        return filteredShelters;
+    }
 }

@@ -31,7 +31,13 @@
         <activity android:name=".controllers.LoginActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name=".controllers.SignupActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name=".controllers.MapActivity"/>
-        <activity android:name=".controllers.ShelterListActivity"/>
+        <activity android:name=".controllers.ShelterListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".controllers.ShelterViewActivity"/>
     </application>
 
