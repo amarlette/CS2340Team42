@@ -158,13 +158,15 @@ public class ShelterListActivity extends AppCompatActivity {
         }
         else if (_filterAnyone.isChecked()) {
             query = databaseReference.child("shelters").orderByChild("allowsAnyone").equalTo(true);
+        } else {
+            query = databaseReference.child("shelters").orderByChild("name");
+            filtration = model.getShelters(); // no filtering
         }
 
         fadapter.cleanup();
 
         //creates new adapter w/ updated query
         recyclerView.setAdapter(createAdapter());
-
     }
 
 
@@ -186,14 +188,17 @@ public class ShelterListActivity extends AppCompatActivity {
 
 
                 Log.d("******firebaseRecycler*", SheltersHolder.class.getName());
-                return new SheltersHolder(view,fadapter);
+                return new SheltersHolder(view, fadapter);
             }
 
             @Override
             protected void populateViewHolder(SheltersHolder viewHolder, Shelter shelter, int position) {
                 viewHolder.setDetails(getApplicationContext(), shelter.getName(), shelter.getPhone());
-                Log.d("SHZZZ", shelter.toString());
-                filtration.add(shelter);
+                if (filtration.size() == 0) {
+                    for (int x = 0; x < fadapter.getItemCount(); x++) {
+                        filtration.add(fadapter.getItem(x));
+                    }
+                }
             }
 
             @Override
