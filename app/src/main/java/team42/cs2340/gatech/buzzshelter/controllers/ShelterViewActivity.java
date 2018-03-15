@@ -21,8 +21,7 @@ public class ShelterViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // TODO: replace the activity_main with a dedicated screen for shelter detailed view
+        setContentView(R.layout.activity_shelter);
         // TODO: create the detailed shelter view screen
 
         model = Model.getInstance();
@@ -38,9 +37,12 @@ public class ShelterViewActivity extends AppCompatActivity {
         super.onResume();
         if (model.getCurrentUser() != null) {
             mDetailTextView.setText(getString(R.string.welcome_user, model.getCurrentUser().getName()));
-
-            mDetailTextView.append("THIS IS THE SPECIFIC SHELTER SCREEN");
+            mDetailTextView.append("\n\n");
             mDetailTextView.append(model.getCurrentShelter().toString());
+            mDetailTextView.append("\nOccupancy: ");
+            mDetailTextView.append(model.getCurrentShelter().getOccupancy());
+            mDetailTextView.append("/");
+            mDetailTextView.append(model.getCurrentShelter().getCapacity());
         }
     }
 }

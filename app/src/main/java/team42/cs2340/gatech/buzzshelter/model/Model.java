@@ -188,4 +188,23 @@ public class Model {
     public List<Shelter> getFilteredShelters() {
         return filteredShelters;
     }
+
+    public void incrementShelterOccupancy(int step) {
+        int cap = Integer.parseInt(currentShelter.getCapacity());
+        int occ = Integer.parseInt(currentShelter.getOccupancy());
+        if (occ + step > cap) {
+            throw new IllegalStateException("Capacity cannot be exceeded!");
+        } else {
+            currentShelter.setOccupancy(Integer.toString(occ + step));
+        }
+    }
+
+    public void decrementShelterOccupancy(int step) {
+        int occ = Integer.parseInt(currentShelter.getOccupancy());
+        if (occ - step < 0) {
+            throw new IllegalStateException("Occupancy cannot be negative!");
+        } else {
+            currentShelter.setOccupancy(Integer.toString(occ - step));
+        }
+    }
 }
