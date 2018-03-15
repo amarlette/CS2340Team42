@@ -24,6 +24,9 @@ public class Shelter {
     /** the shelter's capacity */
     private String capacity;
 
+    /** occupancy level for this shelter */
+    private String occupancy;
+
     /** the shelter's latitude */
     private String latitude;
 
@@ -123,6 +126,14 @@ public class Shelter {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getOccupancy() {
+        return occupancy;
+    }
+
+    public void setOccupancy(String occupancy) {
+        this.occupancy = occupancy;
     }
 
     /**
