@@ -21,12 +21,6 @@
             />
 
         <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/emailpassword_title_text"/>
-
-        <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,6 +31,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Firebase User ID: 123456789abc" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/reservationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Reservations"/>
+
+        <SeekBar
+            android:id="@+id/numReservations"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:progress="1" />
 
     </LinearLayout>
 
@@ -59,31 +71,18 @@
             android:visibility="gone"
             android:weightSum="2.0">
 
-            <Button
-                android:id="@+id/sign_out_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:text="@string/sign_out" />
-
-            <Button
-                android:id="@+id/verify_email_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:text="@string/verify_email" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reserve"
-                android:id="@+id/filter_shelters_button"/>
+                android:text="Make New Reservation"
+                android:id="@+id/make_reserve_button"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -91,8 +90,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:id="@+id/display_filtered_map"/>
+                android:text="Cancel Existing Reservation"
+                android:id="@+id/cancel_reserve_button"/>
         </LinearLayout>
 
     </RelativeLayout>

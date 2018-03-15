@@ -5,7 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ckadi on 2/25/2018.
@@ -46,6 +48,11 @@ public class Shelter {
     private String notes;
 
     // TODO: add fields and getters/setters for allowances (women, newborns, etc.) in order to remove ClassMapper Warning
+    private boolean allowsMen;
+    private boolean allowsChildren;
+    private boolean allowsWomen;
+    private boolean allowsNewborns;
+    private boolean allowsYoungAdults;
 
     public String getName() {
         return name;
@@ -136,6 +143,47 @@ public class Shelter {
         this.occupancy = occupancy;
     }
 
+
+    public void setAllowsChildren(boolean allowsChildren) {
+        this.allowsChildren = allowsChildren;
+    }
+
+    public void setAllowsMen(boolean allowsMen) {
+        this.allowsMen = allowsMen;
+    }
+
+    public void setAllowsNewborns(boolean allowsNewborns) {
+        this.allowsNewborns = allowsNewborns;
+    }
+
+    public void setAllowsWomen(boolean allowsWomen) {
+        this.allowsWomen = allowsWomen;
+    }
+
+    public void setAllowsYoungAdults(boolean allowsYoungAdults) {
+        this.allowsYoungAdults = allowsYoungAdults;
+    }
+
+    public boolean getAllowsMen() {
+        return allowsMen;
+    }
+
+    public boolean getAllowsChildren() {
+        return allowsChildren;
+    }
+
+    public boolean getAllowsWomen() {
+        return allowsWomen;
+    }
+
+    public boolean getAllowsNewborns() {
+        return allowsNewborns;
+    }
+
+    public boolean getAllowsYoungAdults() {
+        return allowsYoungAdults;
+    }
+
     /**
      * Create a new shelter
      * @param name          the shelter's name
@@ -168,4 +216,29 @@ public class Shelter {
         return this.name + " @ " + this.address;
     }
     // TODO: functionality to add user to a shelter if space permits (reservation)
+
+    public int getVacancies() {
+        return Integer.parseInt(capacity) - Integer.parseInt(occupancy);
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("address", address);
+        result.put("occupancy", occupancy);
+        result.put("capacity", capacity);
+        result.put("latitude", latitude);
+        result.put("longitude", longitude);
+        result.put("phone", phone);
+        result.put("restrictions", restrictions);
+        result.put("notes", notes);
+        result.put("allowsChildren", allowsChildren);
+        result.put("allowsMen", allowsMen);
+        result.put("allowsWomen", allowsWomen);
+        result.put("allowsYoungAdults", allowsYoungAdults);
+        result.put("allowsNewborns", allowsNewborns);
+
+        return result;
+    }
+
 }

@@ -197,6 +197,7 @@ public class ShelterListActivity extends AppCompatActivity {
                 if (filtration.size() == 0) {
                     for (int x = 0; x < fadapter.getItemCount(); x++) {
                         filtration.add(fadapter.getItem(x));
+                        fadapter.getItem(x).setKey(getRef(x).getKey());
                     }
                 }
             }
@@ -227,10 +228,11 @@ public class ShelterListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, ShelterViewActivity.class);
+                    if (fadapter.getItem(getAdapterPosition()) != null) {
+                        Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
 
-                    Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
-
-                    context.startActivity(intent);
+                        context.startActivity(intent);
+                    }
                 }
             });
 

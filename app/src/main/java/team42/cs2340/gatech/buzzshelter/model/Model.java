@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -107,6 +108,7 @@ public class Model {
         return new ArrayList<>(shelters.values());
     }
 
+    public HashMap<String, Shelter> getShelterDictionary() { return shelters; }
     /**
      * add a shelter to the app. checks if duplicate
      *
@@ -150,7 +152,48 @@ public class Model {
 //    public boolean addUserToShelter(User user) {
 //        return user != null && currentShelter.reserve(user);
 //    }
+    public boolean makeReservation(int numReservations) {
+        if (currentUserHasReservation() || numReservations == 0) {
+            return false;
+        }
+        try {
+            incrementShelterOccupancy(numReservations);
+            ((BasicUser) currentUser).setNumReservations(numReservations);
+            ((BasicUser) currentUser).setCurrentShelterId(currentShelter.getKey());
+        } catch (IllegalStateException e) {
+            return false;
+        }
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
+        HashMap<String, Object> userMap = new HashMap<>();
 
+        UserContainer userDetails = new UserContainer(currentUser);
+        userMap.put(currentUser.getUid(), userDetails); // additional details
+        userRef.updateChildren(userMap); // update user in database
+
+        return true;
+    }
+    public boolean cancelReservation() {
+        if (!currentUserHasReservation()) {
+            return false;
+        }
+        try {
+            Shelter userHome = shelters.get(((BasicUser) currentUser).getCurrentShelterId());
+            decrementShelterOccupancy(userHome, ((BasicUser) currentUser).getNumReservations());
+            ((BasicUser) currentUser).setNumReservations(0);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
+        HashMap<String, Object> userMap = new HashMap<>();
+
+        UserContainer userDetails = new UserContainer(currentUser);
+        userMap.put(currentUser.getUid(), userDetails); // additional details
+        userRef.updateChildren(userMap); // update user in database
+
+        return true;
+    }
     public User getCurrentUser() {
         return currentUser;
     }
@@ -170,7 +213,9 @@ public class Model {
         } else if (userDetails.role.equals("employee")) {
             user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
         } else {
-            user = new BasicUser(uid, userDetails.name, userDetails.email);
+            user = new BasicUser(uid, userDetails.name, userDetails.email, userDetails.currentShelter);
+            ((BasicUser) user).setCurrentShelterId(userDetails.currentShelter);
+            ((BasicUser) user).setNumReservations(userDetails.numReservations);
         }
         this.currentUser = user;
     }
@@ -189,22 +234,49 @@ public class Model {
         return filteredShelters;
     }
 
-    public void incrementShelterOccupancy(int step) {
+    private void incrementShelterOccupancy(int step) {
         int cap = Integer.parseInt(currentShelter.getCapacity());
         int occ = Integer.parseInt(currentShelter.getOccupancy());
         if (occ + step > cap) {
             throw new IllegalStateException("Capacity cannot be exceeded!");
         } else {
             currentShelter.setOccupancy(Integer.toString(occ + step));
+
+            int newOcc = Integer.parseInt(currentShelter.getOccupancy());
+            newOcc += ((BasicUser) currentUser).getNumReservations();
+            currentShelter.setOccupancy(Integer.toString(newOcc));
+
+            DatabaseReference shelterRef = mDatabase.child("shelters");
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put(currentShelter.getKey(), currentShelter.toMap());
+            shelterRef.updateChildren(childUpdates);
         }
     }
 
-    public void decrementShelterOccupancy(int step) {
-        int occ = Integer.parseInt(currentShelter.getOccupancy());
+    private void decrementShelterOccupancy(Shelter shelter, int step) {
+        int occ = Integer.parseInt(shelter.getOccupancy());
         if (occ - step < 0) {
             throw new IllegalStateException("Occupancy cannot be negative!");
         } else {
-            currentShelter.setOccupancy(Integer.toString(occ - step));
+            if (shelter.getKey().equals(currentShelter.getKey())) {
+                currentShelter.setOccupancy(Integer.toString(occ-step));
+            } else {
+                shelter.setOccupancy(Integer.toString(occ - step));
+            }
+            DatabaseReference shelterRef = mDatabase.child("shelters");
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put(shelter.getKey(), shelter.toMap());
+            shelterRef.updateChildren(childUpdates);
         }
+    }
+
+    public int getMaxReservations(Shelter shelter) {
+        int max = 5;
+        return Math.min(shelter.getVacancies(), max);
+
+    }
+
+    public boolean currentUserHasReservation() {
+        return ((BasicUser) currentUser).hasReservation();
     }
 }
