@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.List;
 
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
@@ -37,13 +38,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Model model;
     private HashMap<Marker, Shelter> markers;
     private GoogleMap targetMap;
+    private List<Shelter> shelters;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         model = Model.getInstance();
         markers = new HashMap<>();
-
+        if (model.getFilteredShelters() != null) {
+            shelters = model.getFilteredShelters();
+        } else {
+            shelters = model.getShelters();
+        }
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -70,7 +76,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (Shelter shelter : model.getShelters()) {
+        for (Shelter shelter : shelters) {
             Location loc = shelter.getLocation();
             LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
             Marker marker = map.addMarker(new MarkerOptions().position(pos)
@@ -84,5 +90,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         map.moveCamera(cu);
         map.animateCamera(cu);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        model.setFilteredShelters(null);
     }
 }

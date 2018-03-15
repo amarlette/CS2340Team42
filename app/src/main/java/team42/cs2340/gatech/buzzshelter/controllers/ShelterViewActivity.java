@@ -37,10 +37,7 @@ public class ShelterViewActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if (model.getCurrentUser() != null) {
-            mStatusTextView.setText(model.getCurrentUser().getEmail());
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, model.getCurrentUser().getUid()));
-            mDetailTextView.append("\n");
-            mDetailTextView.append(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+            mDetailTextView.setText(getString(R.string.welcome_user, model.getCurrentUser().getName()));
 
             mDetailTextView.append("THIS IS THE SPECIFIC SHELTER SCREEN");
             mDetailTextView.append(model.getCurrentShelter().toString());
