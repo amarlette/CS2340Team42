@@ -1,27 +1,16 @@
 package team42.cs2340.gatech.buzzshelter.controllers;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team42.cs2340.gatech.buzzshelter.R;
-import team42.cs2340.gatech.buzzshelter.model.BasicUser;
 import team42.cs2340.gatech.buzzshelter.model.Model;
-
-/**
- * Created by ckadi on 3/3/2018.
- */
 
 public class ShelterViewActivity extends AppCompatActivity {
     private Model model;
@@ -67,12 +56,16 @@ public class ShelterViewActivity extends AppCompatActivity {
         });
 
         _makeReservation.setEnabled(!model.currentUserHasReservation()
-                && model.getMaxReservations(model.getCurrentShelter()) != 0);
+                && (model.getMaxReservations(model.getCurrentShelter()) != 0));
         _cancelReservation.setEnabled(model.currentUserHasReservation());
 
         _makeReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (!model.makeReservation(_numReservations.getProgress())) {
+//                    Toast.makeText(ShelterViewActivity.this, "capacity reached",
+//                            Toast.LENGTH_LONG).show();
+//                };
                 model.makeReservation(_numReservations.getProgress());
                 _makeReservation.setEnabled(false);
                 _cancelReservation.setEnabled(true);

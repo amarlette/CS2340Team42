@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login() {
+    private void login() {
         if (!validate()) {
             onLoginFailed();
             return;
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess(String userId) {
+    private void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
@@ -158,11 +158,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void onLoginFailed() {
+    private void onLoginFailed() {
         _loginButton.setEnabled(true);
     }
 
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
         String email = _emailText.getText().toString();
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (password.isEmpty() || (password.length() < 6)) {
             _passwordText.setError("must be at least 6 characters");
             valid = false;
         } else {

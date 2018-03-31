@@ -1,17 +1,13 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
-/**
- * Created by ckadi on 2/26/2018.
- */
-
 public abstract class User {
     /** user's key in user db table */
-    private String uid;
+    private final String uid;
 
-    private String name;
-    private String email;
+    private final String name;
+    private final String email;
 
-    public User(String uid, String name, String email) {
+    User(String uid, String name, String email) {
         this.uid = uid;
         this.name = name;
         this.email = email;

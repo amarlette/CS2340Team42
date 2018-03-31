@@ -1,16 +1,9 @@
 package team42.cs2340.gatech.buzzshelter.controllers;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * Created by ckadi on 2/28/2018.
- */
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +19,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
@@ -36,7 +30,7 @@ import team42.cs2340.gatech.buzzshelter.model.Shelter;
  */
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Model model;
-    private HashMap<Marker, Shelter> markers;
+    private Map<Marker, Shelter> markers;
     private GoogleMap targetMap;
     private List<Shelter> shelters;
     @Override
