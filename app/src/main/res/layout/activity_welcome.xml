@@ -17,6 +17,7 @@
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_gravity="center"
+        android:contentDescription="GT Logo"
         android:src="@drawable/ic_gt_logo" />
 
     <Button
