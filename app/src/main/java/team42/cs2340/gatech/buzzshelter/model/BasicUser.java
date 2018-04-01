@@ -15,6 +15,7 @@ public class BasicUser extends User {
     public BasicUser(String uid, String name, String email, String shelterId) {
         super(uid, name, email);
         this.currentShelterId = shelterId;
+
     }
 
     public String getCurrentShelterId() {
