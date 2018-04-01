@@ -17,7 +17,7 @@ public class UserContainer {
     public UserContainer(User user) {
         this.name = user.getName();
         this.email = user.getEmail();
-        this.role = user instanceof AdminUser
+        this.role = (user instanceof AdminUser)
                 ? "admin"
                 : ((user instanceof ShelterEmployee) ? "employee" : "basic");
         if (user instanceof BasicUser) {

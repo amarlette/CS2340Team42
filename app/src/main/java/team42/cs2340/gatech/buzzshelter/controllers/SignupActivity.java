@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -79,7 +80,7 @@ public class SignupActivity extends AppCompatActivity {
         _userType.setAdapter(adapter);
     }
 
-    public void signup() {
+    private void signup() {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
@@ -126,12 +127,12 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                     });
                             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-                            HashMap<String, Object> userMap = new HashMap<>();
+                            Map<String, Object> userMap = new HashMap<>();
 
                             User currentUser;
-                            if (_userType.getSelectedItem().equals("admin")) {
+                            if ("admin".equals(_userType.getSelectedItem())) {
                                 currentUser = new AdminUser(mAuth.getCurrentUser().getUid(), name, email);
-                            } else if (_userType.getSelectedItem().equals("employee")) {
+                            } else if ("employee".equals(_userType.getSelectedItem())) {
                                 currentUser = new ShelterEmployee(mAuth.getCurrentUser().getUid(), name, email);
                             } else {
                                 currentUser = new BasicUser(mAuth.getCurrentUser().getUid(), name, email);
@@ -160,26 +161,26 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    public void onSignupSuccess() {
+    private void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
     }
 
-    public void onSignupFailed() {
+    private void onSignupFailed() {
         // Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
 
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
+        if (name.isEmpty() || (name.length() < 3)) {
             _nameText.setError("at least 3 characters");
             valid = false;
         } else {
@@ -193,7 +194,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (password.isEmpty() || (password.length() < 6)) {
             _passwordText.setError("Password must be at least 6 characters");
             valid = false;
         } else {
