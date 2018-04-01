@@ -1,17 +1,8 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-/**
- * Created by ckadi on 2/25/2018.
- */
 
 public class Shelter {
     /** this shelter's firebase key */
@@ -222,7 +213,7 @@ public class Shelter {
     }
 
     public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         result.put("name", name);
         result.put("address", address);
         result.put("occupancy", occupancy);

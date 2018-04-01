@@ -1,18 +1,13 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
-import android.location.Location;
-import android.support.compat.BuildConfig;
 import android.util.Log;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +20,12 @@ import static android.content.ContentValues.TAG;
  * Facade to model.
  */
 
-public class Model {
+public final class Model {
     /** singleton instance */
     private static final Model instance = new Model();
 
     /** holds all shelters, mapped to their db key */
-    private HashMap<String, Shelter> shelters;
+    private final Map<String, Shelter> shelters;
 
     /** holds the current filtered list of shelters */
     private List<Shelter> filteredShelters;
@@ -39,9 +34,9 @@ public class Model {
     private Shelter currentShelter;
 
     /** access to database */
-    private DatabaseReference mDatabase;
+    private final DatabaseReference mDatabase;
 
-    private FirebaseAuth mAuth;
+    private final FirebaseAuth mAuth;
 
     public static Model getInstance() {
         return instance;
@@ -104,11 +99,11 @@ public class Model {
      * get the shelters
      * @return a list of the shelters in the app
      */
-    public ArrayList<Shelter> getShelters() {
+    public List<Shelter> getShelters() {
         return new ArrayList<>(shelters.values());
     }
 
-    public HashMap<String, Shelter> getShelterDictionary() { return shelters; }
+    public Map<String, Shelter> getShelterDictionary() { return shelters; }
     /**
      * add a shelter to the app. checks if duplicate
      *
@@ -153,7 +148,7 @@ public class Model {
 //        return user != null && currentShelter.reserve(user);
 //    }
     public boolean makeReservation(int numReservations) {
-        if (currentUserHasReservation() || numReservations == 0) {
+        if (currentUserHasReservation() || (numReservations == 0)) {
             return false;
         }
         try {
@@ -164,7 +159,7 @@ public class Model {
             return false;
         }
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-        HashMap<String, Object> userMap = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
 
         UserContainer userDetails = new UserContainer(currentUser);
         userMap.put(currentUser.getUid(), userDetails); // additional details
@@ -186,7 +181,7 @@ public class Model {
         }
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-        HashMap<String, Object> userMap = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
 
         UserContainer userDetails = new UserContainer(currentUser);
         userMap.put(currentUser.getUid(), userDetails); // additional details
@@ -208,9 +203,9 @@ public class Model {
         User user;
         String uid = mAuth.getCurrentUser().getUid();
 
-        if (userDetails.role.equals("admin")) {
+        if ("admin".equals(userDetails.role)) {
             user = new AdminUser(uid, userDetails.name, userDetails.email);
-        } else if (userDetails.role.equals("employee")) {
+        } else if ("employee".equals(userDetails.role)) {
             user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
         } else {
             user = new BasicUser(uid, userDetails.name, userDetails.email, userDetails.currentShelter);
@@ -237,7 +232,7 @@ public class Model {
     private void incrementShelterOccupancy(int step) {
         int cap = Integer.parseInt(currentShelter.getCapacity());
         int occ = Integer.parseInt(currentShelter.getOccupancy());
-        if (occ + step > cap) {
+        if ((occ + step) > cap) {
             throw new IllegalStateException("Capacity cannot be exceeded!");
         } else {
             currentShelter.setOccupancy(Integer.toString(occ + step));
@@ -255,7 +250,7 @@ public class Model {
 
     private void decrementShelterOccupancy(Shelter shelter, int step) {
         int occ = Integer.parseInt(shelter.getOccupancy());
-        if (occ - step < 0) {
+        if ((occ - step) < 0) {
             throw new IllegalStateException("Occupancy cannot be negative!");
         } else {
             if (shelter.getKey().equals(currentShelter.getKey())) {

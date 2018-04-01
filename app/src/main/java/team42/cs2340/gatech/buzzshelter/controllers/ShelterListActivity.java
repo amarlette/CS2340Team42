@@ -17,11 +17,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,24 +30,20 @@ import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.Shelter;
 
-/**
- * Created by ckadi on 2/26/2018.
- */
-
 public class ShelterListActivity extends AppCompatActivity {
-    Model model;
+    private Model model;
 
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
-    List<Shelter> filtration = new ArrayList<>();
+    private List<Shelter> filtration = new ArrayList<>();
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
-    Query query;
+    private Query query;
 
-    FirebaseRecyclerAdapter<Shelter,SheltersHolder> fadapter;
+    private FirebaseRecyclerAdapter<Shelter,SheltersHolder> fadapter;
 
     @BindView(R.id.search_shelter_button) Button _searchShelterButton;
     @BindView(R.id.filter_shelters_button) Button _filterSheltersButton;
@@ -71,7 +65,7 @@ public class ShelterListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         model = Model.getInstance();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ShelterListActivity.this));
         progressDialog = new ProgressDialog(ShelterListActivity.this);
@@ -125,7 +119,7 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * Creates a query to search for shelters matching the inputted text from the search view
      */
-    public void searchShelters() {
+    private void searchShelters() {
         Log.d("******","****SEARCH SHELTERS****");
         Log.d("input",_searchView.getQuery().toString());
 
@@ -139,7 +133,7 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * Creates a query to search for shelters based on checkboxes
      */
-    public void filterShelters(){
+    private void filterShelters(){
         Log.d("input", "****FILTER SHELTERS**");
         if (_filterMale.isChecked()) {
             query = databaseReference.child("shelters").orderByChild("allowsMen").equalTo(true);
@@ -181,6 +175,7 @@ public class ShelterListActivity extends AppCompatActivity {
                 SheltersHolder.class,
                 query
         ) {
+            @Override
             public SheltersHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
                 View view = LayoutInflater.from(parent.getContext())
@@ -194,7 +189,7 @@ public class ShelterListActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(SheltersHolder viewHolder, Shelter shelter, int position) {
                 viewHolder.setDetails(getApplicationContext(), shelter.getName(), shelter.getPhone());
-                if (filtration.size() == 0) {
+                if (filtration.isEmpty()) {
                     for (int x = 0; x < fadapter.getItemCount(); x++) {
                         filtration.add(fadapter.getItem(x));
                         fadapter.getItem(x).setKey(getRef(x).getKey());
@@ -214,9 +209,9 @@ public class ShelterListActivity extends AppCompatActivity {
     }
 
     class SheltersHolder extends RecyclerView.ViewHolder {
-        View mView;
+        final View mView;
 
-        FirebaseRecyclerAdapter<Shelter, SheltersHolder> mFadapter;
+        final FirebaseRecyclerAdapter<Shelter, SheltersHolder> mFadapter;
         SheltersHolder(View itemView, final FirebaseRecyclerAdapter<Shelter, SheltersHolder> fadapter) {
             super(itemView);
 
