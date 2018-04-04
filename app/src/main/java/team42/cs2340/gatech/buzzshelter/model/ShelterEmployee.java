@@ -4,12 +4,14 @@ package team42.cs2340.gatech.buzzshelter.model;
  * Represents a shelter employee user.
  */
 public class ShelterEmployee extends User {
-    private Shelter shelter;
+    //private Shelter shelter;
 
     public ShelterEmployee(String uid, String name, String email) {
         super(uid, name, email);
 
     }
+
+    /*
     public ShelterEmployee(String uid, String name, String email, Shelter shelter) {
         super(uid, name, email);
         this.shelter = shelter;
@@ -19,4 +21,6 @@ public class ShelterEmployee extends User {
 
     public void changeShelterOccupancy() {}
     public void changeShelterCapacity(){}
+
+    */
 }
