@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -108,7 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if (task.getException().getClass().equals(FirebaseAuthInvalidUserException.class)) {
+                            if ((task.getException() != null)
+                                    && task.getException().getClass().
+                                    equals(FirebaseAuthInvalidUserException.class)) {
                                 Toast.makeText(LoginActivity.this, R.string.user_not_found,
                                         Toast.LENGTH_LONG).show();
                             } else {
@@ -143,7 +145,8 @@ public class LoginActivity extends AppCompatActivity {
     private void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().
+                getReference().child("users").child(userId);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

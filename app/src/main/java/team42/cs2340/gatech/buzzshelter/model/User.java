@@ -1,5 +1,8 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
+/**
+ * An abstraction of a user of the application.
+ */
 public abstract class User {
     /** user's key in user db table */
     private final String uid;

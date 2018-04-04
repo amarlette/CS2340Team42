@@ -28,13 +28,8 @@
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
     <string name="verify_email">Verify Email</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
     <string name="emailpassword_title_text">Email and Password</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
-    <string name="loading">Loading…</string>
-    <string name="label_emailpassword">Email/Password Authentication</string>
-    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
 
     <string name="map_api_key">AIzaSyACUTh4LKyNkAjW-hzpmpZzkgIrU8sxhZE</string>
     <string name="view_map">View Map</string>
