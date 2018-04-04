@@ -130,12 +130,13 @@ public class SignupActivity extends AppCompatActivity {
                             Map<String, Object> userMap = new HashMap<>();
 
                             User currentUser;
+                            String uid = mAuth.getCurrentUser().getUid();
                             if ("admin".equals(_userType.getSelectedItem())) {
-                                currentUser = new AdminUser(mAuth.getCurrentUser().getUid(), name, email);
+                                currentUser = new AdminUser(uid, name, email);
                             } else if ("employee".equals(_userType.getSelectedItem())) {
-                                currentUser = new ShelterEmployee(mAuth.getCurrentUser().getUid(), name, email);
+                                currentUser = new ShelterEmployee(uid, name, email);
                             } else {
-                                currentUser = new BasicUser(mAuth.getCurrentUser().getUid(), name, email);
+                                currentUser = new BasicUser(uid, name, email);
                             }
 
                             UserContainer userDetails = new UserContainer(currentUser);

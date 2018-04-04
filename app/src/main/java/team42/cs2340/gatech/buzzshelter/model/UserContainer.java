@@ -21,7 +21,7 @@ public class UserContainer {
     public UserContainer(User user) {
         this.name = user.getName();
         this.email = user.getEmail();
-        this.role = (user.getClass().equals(AdminUser.class))
+        this.role = (AdminUser.class.equals(user.getClass()))
                 ? "admin"
                 : ((user.getClass().equals(ShelterEmployee.class)) ? "employee" : "basic");
         if (user.getClass().equals(BasicUser.class)) {
