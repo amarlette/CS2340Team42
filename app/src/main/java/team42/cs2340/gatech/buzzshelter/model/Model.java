@@ -64,8 +64,10 @@ public final class Model {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
-                shelter.setKey(dataSnapshot.getKey());
-                shelters.put(shelter.getKey(), shelter);
+                if (shelter != null) {
+                    shelter.setKey(dataSnapshot.getKey());
+                    shelters.put(shelter.getKey(), shelter);
+                }
             }
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
@@ -74,8 +76,10 @@ public final class Model {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Shelter shelter = dataSnapshot.getValue(Shelter.class);
-                shelter.setKey(dataSnapshot.getKey());
-                shelters.put(shelter.getKey(), shelter);
+                if (shelter != null) {
+                    shelter.setKey(dataSnapshot.getKey());
+                    shelters.put(shelter.getKey(), shelter);
+                }
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -193,13 +197,18 @@ public final class Model {
         return currentUser;
     }
 
-    public boolean setCurrentUser(User user) {
+    public void setCurrentUser(User user) {
         this.currentUser = user;
-        return true;
     }
 
     public void setCurrentUser(DataSnapshot dataSnapshot) {
         UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
+
+        if ((mAuth.getCurrentUser() == null) || (userDetails == null)) {
+            this.currentUser = null; // should not happen
+            return;
+        }
+
         User user;
         String uid = mAuth.getCurrentUser().getUid();
 
@@ -208,7 +217,8 @@ public final class Model {
         } else if ("employee".equals(userDetails.role)) {
             user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
         } else {
-            user = new BasicUser(uid, userDetails.name, userDetails.email, userDetails.currentShelter);
+            user = new BasicUser(uid, userDetails.name,
+                    userDetails.email, userDetails.currentShelter);
             ((BasicUser) user).setCurrentShelterId(userDetails.currentShelter);
             ((BasicUser) user).setNumReservations(userDetails.numReservations);
         }

@@ -17,7 +17,8 @@
             android:layout_height="87dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_gt_logo" />
+            android:src="@drawable/ic_gt_logo"
+            android:contentDescription="Georgia Tech Logo"/>
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout

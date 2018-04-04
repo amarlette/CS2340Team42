@@ -35,21 +35,24 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (model.getCurrentUser() != null) {
             mStatusTextView.setText(model.getCurrentUser().getEmail());
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, model.getCurrentUser().getUid()));
+            mDetailTextView.setText(getString(R.string.firebase_status_fmt,
+                    model.getCurrentUser().getUid()));
             mDetailTextView.append("\n");
-            mDetailTextView.append(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+            mDetailTextView.append(getString(R.string.welcome_user,
+                    model.getCurrentUser().getName()));
 
             mDetailTextView.append("\nYou are a: ");
             mDetailTextView.append(model.getCurrentUser().getClass().toString());
 
             mDetailTextView.append("\n You currently have ");
-            if (model.getCurrentUser() instanceof BasicUser) {
+            if (model.getCurrentUser().getClass().equals(BasicUser.class)) {
                 BasicUser user = (BasicUser) model.getCurrentUser();
                 mDetailTextView.append(Integer.toString(user.getNumReservations()));
                 mDetailTextView.append(" reservations");
                 if (user.getNumReservations() > 0) {
                     mDetailTextView.append(" at ");
-                    mDetailTextView.append(model.getShelterDictionary().get(user.getCurrentShelterId()).getName());
+                    mDetailTextView.append(model.getShelterDictionary().
+                            get(user.getCurrentShelterId()).getName());
                 }
             }
         }

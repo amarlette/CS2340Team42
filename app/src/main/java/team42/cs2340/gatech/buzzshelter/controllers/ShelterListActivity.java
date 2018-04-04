@@ -123,7 +123,9 @@ public class ShelterListActivity extends AppCompatActivity {
         Log.d("******","****SEARCH SHELTERS****");
         Log.d("input",_searchView.getQuery().toString());
 
-        query = databaseReference.child("shelters").orderByChild("name").startAt(_searchView.getQuery().toString()).endAt(_searchView.getQuery().toString()+"\uf8ff");
+        query = databaseReference.child("shelters").orderByChild("name").
+                startAt(_searchView.getQuery().toString()).
+                endAt(_searchView.getQuery().toString()+"\uf8ff");
         fadapter.cleanup();
 
         //creates new adapter w/ updated adapter
@@ -136,24 +138,31 @@ public class ShelterListActivity extends AppCompatActivity {
     private void filterShelters(){
         Log.d("input", "****FILTER SHELTERS**");
         if (_filterMale.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsMen").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsMen").equalTo(true);
         }
         else if (_filterFemale.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsWomen").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsWomen").equalTo(true);
         }
         else if (_filterNewBornsCheckbox.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsNewborns").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsNewborns").equalTo(true);
         }
         else if (_filterYoungAdultsCheckbox.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsYoungAdults").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsYoungAdults").equalTo(true);
         }
         else if (_filterChildrenCheckBox.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsChildren").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsChildren").equalTo(true);
         }
         else if (_filterAnyone.isChecked()) {
-            query = databaseReference.child("shelters").orderByChild("allowsAnyone").equalTo(true);
+            query = databaseReference.child("shelters").
+                    orderByChild("allowsAnyone").equalTo(true);
         } else {
-            query = databaseReference.child("shelters").orderByChild("name");
+            query = databaseReference.child("shelters").
+                    orderByChild("name");
             filtration = model.getShelters(); // no filtering
         }
 

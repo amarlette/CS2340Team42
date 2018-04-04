@@ -1,5 +1,8 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
+/**
+ * Represents a basic user with minimal privileges.
+ */
 public class BasicUser extends User {
     private boolean accountLocked;
     private String currentShelterId;

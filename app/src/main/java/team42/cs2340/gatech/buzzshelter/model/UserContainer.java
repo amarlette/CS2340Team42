@@ -14,18 +14,25 @@ public class UserContainer {
     public Integer numReservations;
     // ... more attributes for db
 
+    /**
+     * Creates a UserContainer that mimics an entry in the firebase DB
+     * @param user a User object, necessary information for DB columns will be taken from the object
+     */
     public UserContainer(User user) {
         this.name = user.getName();
         this.email = user.getEmail();
-        this.role = (user instanceof AdminUser)
+        this.role = (user.getClass().equals(AdminUser.class))
                 ? "admin"
-                : ((user instanceof ShelterEmployee) ? "employee" : "basic");
-        if (user instanceof BasicUser) {
+                : ((user.getClass().equals(ShelterEmployee.class)) ? "employee" : "basic");
+        if (user.getClass().equals(BasicUser.class)) {
             this.currentShelter = ((BasicUser) user).getCurrentShelterId();
             this.numReservations = ((BasicUser) user).getNumReservations();
         }
     }
 
+    /**
+     * No arg constructor required by firebase
+     */
     public UserContainer() {
 
     }

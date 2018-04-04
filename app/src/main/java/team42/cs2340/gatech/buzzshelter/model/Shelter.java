@@ -4,6 +4,9 @@ import android.location.Location;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Information holder for a homeless shelter instance
+ */
 public class Shelter {
     /** this shelter's firebase key */
     private String key;

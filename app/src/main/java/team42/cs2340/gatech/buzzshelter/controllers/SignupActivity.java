@@ -106,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
@@ -146,7 +146,9 @@ public class SignupActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            if (task.getException().getClass().equals(FirebaseAuthUserCollisionException.class)) {
+                            if ((task.getException() != null)
+                                    && task.getException().getClass()
+                                    .equals(FirebaseAuthUserCollisionException.class)) {
                                 Toast.makeText(SignupActivity.this, R.string.user_exists,
                                         Toast.LENGTH_LONG).show();
                             } else {
