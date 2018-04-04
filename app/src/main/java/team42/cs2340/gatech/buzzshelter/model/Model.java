@@ -92,12 +92,15 @@ public final class Model {
 
     /**
      * populate the model with currently existing shelter data from database
-     */
+     /
+     /*
     private void loadShelters() {
         // TODO: pull shelters from db, populate shelter list
         // likely not necessary, handle above with child listener, real time updates
         // remove function upon implementation
     }
+
+     */
 
     /**
      * get the shelters
@@ -118,7 +121,7 @@ public final class Model {
         // TODO: check whether shelter exists (query db real time)
         // TODO: add shelter if not exists, admin only
 
-        loadShelters(); // update shelter list with up to date data
+        //loadShelters(); // update shelter list with up to date data
         return true;
     }
 
