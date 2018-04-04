@@ -10,6 +10,7 @@ import android.widget.TextView;
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.BasicUser;
 import team42.cs2340.gatech.buzzshelter.model.Model;
+import team42.cs2340.gatech.buzzshelter.model.User;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,20 +34,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (model.getCurrentUser() != null) {
-            mStatusTextView.setText(model.getCurrentUser().getEmail());
+        User currentUser = model.getCurrentUser();
+        if (currentUser != null) {
+            mStatusTextView.setText(currentUser.getEmail());
             mDetailTextView.setText(getString(R.string.firebase_status_fmt,
-                    model.getCurrentUser().getUid()));
+                    currentUser.getUid()));
             mDetailTextView.append("\n");
             mDetailTextView.append(getString(R.string.welcome_user,
-                    model.getCurrentUser().getName()));
+                    currentUser.getName()));
 
             mDetailTextView.append("\nYou are a: ");
-            mDetailTextView.append(model.getCurrentUser().getClass().toString());
+            mDetailTextView.append(currentUser.getClass().toString());
 
             mDetailTextView.append("\n You currently have ");
-            if (model.getCurrentUser().getClass().equals(BasicUser.class)) {
-                BasicUser user = (BasicUser) model.getCurrentUser();
+            if (currentUser.getClass().equals(BasicUser.class)) {
+                BasicUser user = (BasicUser) currentUser;
                 mDetailTextView.append(Integer.toString(user.getNumReservations()));
                 mDetailTextView.append(" reservations");
                 if (user.getNumReservations() > 0) {
