@@ -92,7 +92,7 @@ public final class Model {
 
     /**
      * populate the model with currently existing shelter data from database
-     /
+     **/
      /*
     private void loadShelters() {
         // TODO: pull shelters from db, populate shelter list
@@ -117,6 +117,7 @@ public final class Model {
      * @param shelter  the shelter to be added
      * @return true if added, false if a duplicate
      */
+    /*
     public boolean addShelter(Shelter shelter) {
         // TODO: check whether shelter exists (query db real time)
         // TODO: add shelter if not exists, admin only
@@ -124,12 +125,15 @@ public final class Model {
         //loadShelters(); // update shelter list with up to date data
         return true;
     }
+    */
 
+    /*
     public boolean updateShelter(Shelter shelter) {
 
         // TODO: update an existing shelter using its db key, employee only
         return true;
     }
+    */
 
     /**
      *
