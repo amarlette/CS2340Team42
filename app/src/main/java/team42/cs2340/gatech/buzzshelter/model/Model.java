@@ -101,6 +101,9 @@ public final class Model {
         return new ArrayList<>(shelters.values());
     }
 
+    /**
+     * @return a map of the shelters
+     */
     public Map<String, Shelter> getShelterDictionary() { return shelters; }
 
     /*
@@ -256,14 +259,25 @@ public final class Model {
         // currentShelter = new Shelter();
     }
 
+    /**
+     * Sets the filtered shelters
+     * @param filteredShelters a list of filtered shelters
+     */
     public void setFilteredShelters(List<Shelter> filteredShelters) {
         this.filteredShelters = filteredShelters;
     }
 
+    /**
+     * @return the filtered shelters
+     */
     public List<Shelter> getFilteredShelters() {
         return filteredShelters;
     }
 
+    /**
+     * Increment the shelter occupancy
+     * @param step the amount fo increment the shelter occupancy by
+     */
     private void incrementShelterOccupancy(int step) {
         int cap = Integer.parseInt(currentShelter.getCapacity());
         int occ = Integer.parseInt(currentShelter.getOccupancy());
@@ -283,6 +297,11 @@ public final class Model {
         }
     }
 
+    /**
+     * Decrement the shelter occupancy
+     * @param shelter the shelter who's occupancy to decrement
+     * @param step the amount to decrement by
+     */
     private void decrementShelterOccupancy(Shelter shelter, int step) {
         int occ = Integer.parseInt(shelter.getOccupancy());
         if ((occ - step) < 0) {
@@ -300,16 +319,27 @@ public final class Model {
         }
     }
 
+    /**
+     * Returns the maximum number of reservations
+     * @param shelter the shelter being looked at
+     * @return the number of max possible reservations
+     */
     public int getMaxReservations(Shelter shelter) {
         int max = 5;
         return Math.min(shelter.getVacancies(), max);
 
     }
 
+    /**
+     * @return a boolen if user as a reservation
+     */
     public boolean currentUserHasReservation() {
         return ((BasicUser) currentUser).hasReservation();
     }
 
+    /**
+     * @return a boolean is user has signed out
+     */
     public boolean isSignedOut() {
         return (currentUser == null) || (currentUser.getUid() == null);
     }
