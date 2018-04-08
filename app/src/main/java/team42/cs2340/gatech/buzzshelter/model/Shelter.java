@@ -79,7 +79,8 @@ public class Shelter {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-        getLocation().setLatitude(Double.parseDouble(latitude));
+        getLocation(); // create location if not exists
+        location.setLatitude(Double.parseDouble(latitude));
     }
 
     public String getLongitude() {
@@ -88,7 +89,8 @@ public class Shelter {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
-        getLocation().setLongitude(Double.parseDouble(longitude));
+        getLocation(); // create location if not exists
+        location.setLongitude(Double.parseDouble(longitude));
     }
 
     public Location getLocation() {
