@@ -43,15 +43,15 @@ public class Shelter {
     /** notes pertaining to this shelter */
     private String notes;
 
-    /**
-     * @return the name
-     */
     private boolean allowsMen;
     private boolean allowsChildren;
     private boolean allowsWomen;
     private boolean allowsNewborns;
     private boolean allowsYoungAdults;
 
+    /**
+     * @return the shelter's name
+     */
     public String getName() {
         return name;
     }
@@ -303,10 +303,16 @@ public class Shelter {
     }
     // TODO: functionality to add user to a shelter if space permits (reservation)
 
+    /**
+     * @return the number of vacancies
+     */
     public int getVacancies() {
         return Integer.parseInt(capacity) - Integer.parseInt(occupancy);
     }
 
+    /**
+     * @return a map of information about the shelter
+     */
     public Map<String, Object> toMap() {
         Map<String, Object> result = new HashMap<>();
         result.put("name", name);
