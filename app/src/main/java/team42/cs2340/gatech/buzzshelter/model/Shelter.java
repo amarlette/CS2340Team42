@@ -42,48 +42,86 @@ public class Shelter {
     /** notes pertaining to this shelter */
     private String notes;
 
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return a string containing the address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Sets the address
+     * @param address the address to set
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * @return a string of the capacity
+     */
     public String getCapacity() {
         return capacity;
     }
 
+    /**
+     * Sets the capactiy
+     * @param capacity the capacity to set
+     */
     public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
+    /**
+     * @return a string of the latitude
+     */
     public String getLatitude() {
         return latitude;
     }
 
+    /**
+     * Sets the latitude
+     * @param latitude the latitude to set
+     */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
         getLocation().setLatitude(Double.parseDouble(latitude));
     }
 
+    /**
+     * @return a string of the longitude
+     */
     public String getLongitude() {
         return longitude;
     }
 
+    /**
+     * Sets the longitude
+     * @param longitude the longitude to set
+     */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
         getLocation().setLongitude(Double.parseDouble(longitude));
     }
 
+    /**
+     * @return a string of the location
+     */
     public Location getLocation() {
         if (location == null) {
             this.location = new Location("");
@@ -91,34 +129,62 @@ public class Shelter {
         return location;
     }
 
+    /**
+     * @return a string of the phone number
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Sets the phone number
+     * @param phone the number to set
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * @return a string of the restrictions
+     */
     public String getRestrictions() {
         return restrictions;
     }
 
+    /**
+     * Sets the restrictions
+     * @param restrictions the restrictions to set
+     */
     public void setRestrictions(String restrictions) {
         this.restrictions = restrictions;
     }
 
+    /**
+     * @return a string of notes
+     */
     public String getNotes() {
         return notes;
     }
 
+    /**
+     * Sets the notes
+     * @param notes the notes to set
+     */
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
+    /**
+     * @return a key
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * Sets the key
+     * @param key the key to set
+     */
     public void setKey(String key) {
         this.key = key;
     }
@@ -147,10 +213,16 @@ public class Shelter {
         this.notes = notes;
     }
 
+    /**
+     * Empty constructor to initialize shelter
+     */
     public Shelter() {
 
     }
 
+    /**
+     * Returns Shelter as a string
+     */
     public String toString() {
         return this.name + " @ " + this.address;
     }

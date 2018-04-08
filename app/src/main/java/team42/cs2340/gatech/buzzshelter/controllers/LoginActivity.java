@@ -29,7 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+/**
+ * Represents the login interface
+ * @author ckadi
+ * @version 1.0
+ * @since 2/26/18
+ */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -75,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to log in user
+     */
     public void login() {
         if (!validate()) {
             onLoginFailed();
@@ -140,6 +148,10 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
+    /**
+     * Determines if login was a sucess
+     * @param userId the user id belonging to a specified user
+     */
     public void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
@@ -158,10 +170,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when login has failed and allows the user to login again
+     */
     public void onLoginFailed() {
         _loginButton.setEnabled(true);
     }
 
+    /**
+     * Determines if user login is valid
+     * @return a boolean as to if the login is valid
+     */
     public boolean validate() {
         boolean valid = true;
 

@@ -2,10 +2,6 @@ package team42.cs2340.gatech.buzzshelter.controllers;
 
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
-
-/**
- * Created by ckadi on 2/28/2018.
- */
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

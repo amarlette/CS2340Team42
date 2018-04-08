@@ -39,6 +39,10 @@ public class Model {
 
     private FirebaseAuth mAuth;
 
+    /**
+     * Gets the instance of the model
+     * @return the instance of the model
+     */
     public static Model getInstance() {
         return instance;
     }
@@ -118,6 +122,11 @@ public class Model {
         return true;
     }
 
+    /**
+     * Update the shelter
+     * @param shelter the shelter to update
+     * @return if the shelter has been update
+     */
     public boolean updateShelter(Shelter shelter) {
 
         // TODO: update an existing shelter using its db key, employee only
@@ -132,6 +141,10 @@ public class Model {
         return currentShelter;
     }
 
+    /**
+     * Set the current shelter
+     * @param shelter the shelter to set
+     */
     public void setCurrentShelter(Shelter shelter) {
         currentShelter = shelter;
     }
@@ -148,15 +161,28 @@ public class Model {
 //        return user != null && currentShelter.reserve(user);
 //    }
 
+    /**
+     * Gets the current user
+     * @return the current user
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Set the current user
+     * @param user the current user to set to
+     * @return a boolean representing the success of the operation
+     */
     public boolean setCurrentUser(User user) {
         this.currentUser = user;
         return true;
     }
 
+    /**
+     * Set the current user based off of a data snapshot
+     * @param dataSnapshot the data snapshot which is used to get the user
+     */
     public void setCurrentUser(DataSnapshot dataSnapshot) {
         UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
         User user;
@@ -172,6 +198,9 @@ public class Model {
         this.currentUser = user;
     }
 
+    /**
+     * Signs the user out
+     */
     public void signoutUser() {
         mAuth.signOut();
         currentUser = null;
