@@ -113,7 +113,8 @@ public class SignupActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             _passwordText.getText().clear();
 
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            UserProfileChangeRequest profileUpdates
+                                    = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(name)
                                     .build();
 
@@ -126,7 +127,8 @@ public class SignupActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
+                            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                                    .getReference().child("users");
                             Map<String, Object> userMap = new HashMap<>();
 
                             User currentUser;

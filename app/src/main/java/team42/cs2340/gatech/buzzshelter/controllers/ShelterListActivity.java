@@ -196,8 +196,9 @@ public class ShelterListActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void populateViewHolder(SheltersHolder viewHolder, Shelter shelter, int position) {
-                viewHolder.setDetails(getApplicationContext(), shelter.getName(), shelter.getPhone());
+            protected void populateViewHolder(SheltersHolder viewHolder,
+                                              Shelter shelter, int position) {
+                viewHolder.setDetails(shelter.getName(), shelter.getPhone());
                 if (filtration.isEmpty()) {
                     for (int x = 0; x < fadapter.getItemCount(); x++) {
                         filtration.add(fadapter.getItem(x));
@@ -220,12 +221,11 @@ public class ShelterListActivity extends AppCompatActivity {
     class SheltersHolder extends RecyclerView.ViewHolder {
         final View mView;
 
-        final FirebaseRecyclerAdapter<Shelter, SheltersHolder> mFadapter;
-        SheltersHolder(View itemView, final FirebaseRecyclerAdapter<Shelter, SheltersHolder> fadapter) {
+        SheltersHolder(View itemView,
+                       final FirebaseRecyclerAdapter<Shelter, SheltersHolder> fadapter) {
             super(itemView);
 
             mView = itemView;
-            mFadapter = fadapter;
 
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -233,7 +233,8 @@ public class ShelterListActivity extends AppCompatActivity {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, ShelterViewActivity.class);
                     if (fadapter.getItem(getAdapterPosition()) != null) {
-                        Model.getInstance().setCurrentShelter(fadapter.getItem(getAdapterPosition()));
+                        Shelter selected = fadapter.getItem(getAdapterPosition());
+                        model.setCurrentShelter(selected);
 
                         context.startActivity(intent);
                     }
@@ -244,7 +245,7 @@ public class ShelterListActivity extends AppCompatActivity {
         }
 
 
-        public void setDetails(Context ctx, String shelterName, String shelterPhone){
+        public void setDetails(CharSequence shelterName, CharSequence shelterPhone){
             TextView shelter_name = mView.findViewById(R.id.ShowShelterNameTextView);
             TextView shelter_number = mView.findViewById(R.id.ShowShelterNumberTextView);
 

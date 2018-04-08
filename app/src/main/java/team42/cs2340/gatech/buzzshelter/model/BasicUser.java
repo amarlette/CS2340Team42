@@ -18,7 +18,7 @@ public class BasicUser extends User {
     }
 
     public String getCurrentShelterId() {
-        return currentShelterId;
+        return hasReservation() ? currentShelterId : null;
     }
 
     public void setCurrentShelterId(String currentShelterId) {
@@ -33,10 +33,13 @@ public class BasicUser extends User {
         return numReservations;
     }
 
+    /**
+     * sets the number of reservations the user currently holds,
+     * does not reset currentShelterId on numReservations == 0
+     *
+     * @param numReservations new number of reservations held by the user
+     */
     public void setNumReservations(int numReservations) {
         this.numReservations = numReservations;
-        if (numReservations == 0) {
-            this.currentShelterId = null;
-        }
     }
 }

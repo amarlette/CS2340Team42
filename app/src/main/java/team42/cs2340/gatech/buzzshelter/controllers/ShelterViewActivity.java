@@ -34,9 +34,7 @@ public class ShelterViewActivity extends AppCompatActivity {
         _numReservations.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                _reservationLabel.setText("Number of Reservations (");
-                _reservationLabel.append(Integer.toString(progress));
-                _reservationLabel.append(")");
+                _reservationLabel.setText(getString(R.string.num_reservations, progress));
                 if (progress == 0) {
                     _makeReservation.setEnabled(false);
                 } else {
@@ -66,12 +64,14 @@ public class ShelterViewActivity extends AppCompatActivity {
 //                    Toast.makeText(ShelterViewActivity.this, "capacity reached",
 //                            Toast.LENGTH_LONG).show();
 //                };
-                model.makeReservation(_numReservations.getProgress());
-                _makeReservation.setEnabled(false);
-                _cancelReservation.setEnabled(true);
+                if (model.makeReservation(_numReservations.getProgress())) {
+                    _makeReservation.setEnabled(false);
+                    _cancelReservation.setEnabled(true);
+                }
 
                 // TODO: Simplify so that only one thing is updated
-                mDetailTextView.setText(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+                mDetailTextView.setText(getString(R.string.welcome_user,
+                        model.getCurrentUser().getName()));
                 mDetailTextView.append("\n\n");
                 mDetailTextView.append(model.getCurrentShelter().toString());
                 mDetailTextView.append("\nOccupancy: ");
@@ -84,12 +84,14 @@ public class ShelterViewActivity extends AppCompatActivity {
         _cancelReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.cancelReservation();
-                _makeReservation.setEnabled(true);
-                _cancelReservation.setEnabled(false);
+                if (model.cancelReservation()) {
+                    _makeReservation.setEnabled(true);
+                    _cancelReservation.setEnabled(false);
+                }
 
                 // TODO: Simplify so that only one thing is updated
-                mDetailTextView.setText(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+                mDetailTextView.setText(getString(R.string.welcome_user,
+                        model.getCurrentUser().getName()));
                 mDetailTextView.append("\n\n");
                 mDetailTextView.append(model.getCurrentShelter().toString());
                 mDetailTextView.append("\nOccupancy: ");
@@ -103,7 +105,8 @@ public class ShelterViewActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if (model.getCurrentUser() != null) {
-            mDetailTextView.setText(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+            mDetailTextView.setText(getString(R.string.welcome_user,
+                    model.getCurrentUser().getName()));
             mDetailTextView.append("\n\n");
             mDetailTextView.append(model.getCurrentShelter().toString());
             mDetailTextView.append("\nOccupancy: ");
