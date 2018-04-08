@@ -11,9 +11,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
+import team42.cs2340.gatech.buzzshelter.model.Shelter;
+import team42.cs2340.gatech.buzzshelter.model.User;
 
 public class ShelterViewActivity extends AppCompatActivity {
     private Model model;
+    private User currentUser;
+    private Shelter currentShelter;
 
     @BindView(R.id.numReservations) SeekBar _numReservations;
     @BindView(R.id.reservationLabel) TextView _reservationLabel;
@@ -29,7 +33,9 @@ public class ShelterViewActivity extends AppCompatActivity {
         // TODO: create the detailed shelter view screen
 
         model = Model.getInstance();
-        _numReservations.setMax(model.getMaxReservations(model.getCurrentShelter()));
+        currentUser = model.getCurrentUser();
+        currentShelter = model.getCurrentShelter();
+        _numReservations.setMax(model.getMaxReservations(currentShelter));
         _numReservations.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -53,7 +59,7 @@ public class ShelterViewActivity extends AppCompatActivity {
         });
 
         _makeReservation.setEnabled(!model.currentUserHasReservation()
-                && (model.getMaxReservations(model.getCurrentShelter()) != 0));
+                && (model.getMaxReservations(currentShelter) != 0));
         _cancelReservation.setEnabled(model.currentUserHasReservation());
 
         _makeReservation.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +76,13 @@ public class ShelterViewActivity extends AppCompatActivity {
 
                 // TODO: Simplify so that only one thing is updated
                 mDetailTextView.setText(getString(R.string.welcome_user,
-                        model.getCurrentUser().getName()));
+                        currentUser.getName()));
                 mDetailTextView.append("\n\n");
-                mDetailTextView.append(model.getCurrentShelter().toString());
+                mDetailTextView.append(currentShelter.toString());
                 mDetailTextView.append("\nOccupancy: ");
-                mDetailTextView.append(model.getCurrentShelter().getOccupancy());
+                mDetailTextView.append(currentShelter.getOccupancy());
                 mDetailTextView.append("/");
-                mDetailTextView.append(model.getCurrentShelter().getCapacity());
+                mDetailTextView.append(currentShelter.getCapacity());
             }
         });
 
@@ -90,28 +96,29 @@ public class ShelterViewActivity extends AppCompatActivity {
 
                 // TODO: Simplify so that only one thing is updated
                 mDetailTextView.setText(getString(R.string.welcome_user,
-                        model.getCurrentUser().getName()));
+                        currentUser.getName()));
                 mDetailTextView.append("\n\n");
-                mDetailTextView.append(model.getCurrentShelter().toString());
+                mDetailTextView.append(currentShelter.toString());
                 mDetailTextView.append("\nOccupancy: ");
-                mDetailTextView.append(model.getCurrentShelter().getOccupancy());
+                mDetailTextView.append(currentShelter.getOccupancy());
                 mDetailTextView.append("/");
-                mDetailTextView.append(model.getCurrentShelter().getCapacity());
+                mDetailTextView.append(currentShelter.getCapacity());
             }
         });
     }
     @Override
     public void onResume() {
         super.onResume();
-        if (model.getCurrentUser() != null) {
+        if (currentUser != null) {
+            currentShelter = model.getCurrentShelter();
             mDetailTextView.setText(getString(R.string.welcome_user,
-                    model.getCurrentUser().getName()));
+                    currentUser.getName()));
             mDetailTextView.append("\n\n");
-            mDetailTextView.append(model.getCurrentShelter().toString());
+            mDetailTextView.append(currentShelter.toString());
             mDetailTextView.append("\nOccupancy: ");
-            mDetailTextView.append(model.getCurrentShelter().getOccupancy());
+            mDetailTextView.append(currentShelter.getOccupancy());
             mDetailTextView.append("/");
-            mDetailTextView.append(model.getCurrentShelter().getCapacity());
+            mDetailTextView.append(currentShelter.getCapacity());
         }
     }
 }

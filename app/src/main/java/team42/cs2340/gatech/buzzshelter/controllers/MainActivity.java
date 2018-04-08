@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mDetailTextView;
 
     private Model model;
+    private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         model = Model.getInstance();
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
+        currentUser = model.getCurrentUser();
         if (model.isSignedOut()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -34,17 +37,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        User currentUser = model.getCurrentUser();
+        currentUser = model.getCurrentUser();
         if (!model.isSignedOut()) {
-            String email = currentUser.getEmail();
             String userType = currentUser.getClass().toString();
-            String uid = currentUser.getUid();
-            String name = currentUser.getName();
 
-            mStatusTextView.setText(email);
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, uid));
+            mStatusTextView.setText(currentUser.getEmail());
+            mDetailTextView.setText(getString(R.string.firebase_status_fmt, currentUser.getUid()));
             mDetailTextView.append("\n");
-            mDetailTextView.append(getString(R.string.welcome_user, name));
+            mDetailTextView.append(getString(R.string.welcome_user, currentUser.getName()));
 
             mDetailTextView.append("\nYou are a: ");
             mDetailTextView.append(userType);

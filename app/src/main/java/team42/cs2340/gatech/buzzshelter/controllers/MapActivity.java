@@ -80,11 +80,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             markers.put(marker, shelter);
             builder.include(pos);
         }
-        LatLngBounds bounds = builder.build();
-        int padding = 100; // offset from edges of the map in pixels
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        map.moveCamera(cu);
-        map.animateCamera(cu);
+        if (!markers.isEmpty()) {
+            LatLngBounds bounds = builder.build();
+            int padding = 100; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            map.moveCamera(cu);
+            map.animateCamera(cu);
+        }
     }
     @Override
     public void onBackPressed() {

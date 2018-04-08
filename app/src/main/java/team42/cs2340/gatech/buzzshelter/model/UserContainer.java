@@ -23,8 +23,8 @@ public class UserContainer {
         this.email = user.getEmail();
         this.role = (AdminUser.class.equals(user.getClass()))
                 ? "admin"
-                : ((user.getClass().equals(ShelterEmployee.class)) ? "employee" : "basic");
-        if (user.getClass().equals(BasicUser.class)) {
+                : (ShelterEmployee.class.equals(user.getClass()) ? "employee" : "basic");
+        if (BasicUser.class.equals(user.getClass())) {
             this.currentShelter = ((BasicUser) user).getCurrentShelterId();
             this.numReservations = ((BasicUser) user).getNumReservations();
         }
