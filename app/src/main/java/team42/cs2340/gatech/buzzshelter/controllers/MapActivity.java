@@ -64,7 +64,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(final Marker marker) {
-                Model.getInstance().setCurrentShelter(markers.get(marker));
+                Shelter selected = markers.get(marker);
+                model.setCurrentShelter(selected);
                 Intent intent = new Intent(MapActivity.this, ShelterViewActivity.class);
                 startActivity(intent);
             }
@@ -88,6 +89,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        model.setFilteredShelters(null);
+        model.setFilteredShelters(model.getShelters());
     }
 }

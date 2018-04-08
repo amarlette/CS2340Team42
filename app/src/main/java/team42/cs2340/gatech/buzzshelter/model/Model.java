@@ -53,7 +53,6 @@ public final class Model {
         // connect to and read from database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        filteredShelters = null;
 
         DatabaseReference shelterRef = mDatabase.child("shelters");
         shelterRef.addChildEventListener(new ChildEventListener() {
@@ -91,18 +90,6 @@ public final class Model {
     }
 
     /**
-     * populate the model with currently existing shelter data from database
-     **/
-     /*
-    private void loadShelters() {
-        // TODO: pull shelters from db, populate shelter list
-        // likely not necessary, handle above with child listener, real time updates
-        // remove function upon implementation
-    }
-
-     */
-
-    /**
      * get the shelters
      * @return a list of the shelters in the app
      */
@@ -111,12 +98,7 @@ public final class Model {
     }
 
     public Map<String, Shelter> getShelterDictionary() { return shelters; }
-    /**
-     * add a shelter to the app. checks if duplicate
-     *
-     * @param shelter  the shelter to be added
-     * @return true if added, false if a duplicate
-     */
+
     /*
     public boolean addShelter(Shelter shelter) {
         // TODO: check whether shelter exists (query db real time)
@@ -212,7 +194,7 @@ public final class Model {
         UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
 
         if ((mAuth.getCurrentUser() == null) || (userDetails == null)) {
-            this.currentUser = null; // should not happen
+            currentUser = new BasicUser(null, null, null);
             return;
         }
 
@@ -234,8 +216,11 @@ public final class Model {
 
     public void signoutUser() {
         mAuth.signOut();
+        // invalidate user, clear shelter, implementation can be improved
+        // currentUser = new BasicUser(null, null, null);
         currentUser = null;
         currentShelter = null;
+        // currentShelter = new Shelter();
     }
 
     public void setFilteredShelters(List<Shelter> filteredShelters) {
@@ -290,5 +275,9 @@ public final class Model {
 
     public boolean currentUserHasReservation() {
         return ((BasicUser) currentUser).hasReservation();
+    }
+
+    public boolean isSignedOut() {
+        return currentUser == null || currentUser.getUid() == null;
     }
 }
