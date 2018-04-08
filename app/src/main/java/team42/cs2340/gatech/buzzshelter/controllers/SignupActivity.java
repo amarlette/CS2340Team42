@@ -35,6 +35,12 @@ import team42.cs2340.gatech.buzzshelter.model.ShelterEmployee;
 import team42.cs2340.gatech.buzzshelter.model.User;
 import team42.cs2340.gatech.buzzshelter.model.UserContainer;
 
+/**
+ * Represents the signup activity
+ * @author ckadi
+ * @version 1.0
+ * @since 2/26/18
+ */
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
@@ -79,6 +85,9 @@ public class SignupActivity extends AppCompatActivity {
         _userType.setAdapter(adapter);
     }
 
+    /**
+     * Signs user up for a new account
+     */
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -160,18 +169,28 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Sets result to okay
+     */
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
     }
 
+    /**
+     * Allows user to attempt to signup again
+     */
     public void onSignupFailed() {
         // Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
 
+    /**
+     * Determines if credentials are valid
+     * @return a boolean determining if the credentials are valid
+     */
     public boolean validate() {
         boolean valid = true;
 

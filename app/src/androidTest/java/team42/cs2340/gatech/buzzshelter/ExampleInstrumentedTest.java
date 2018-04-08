@@ -16,6 +16,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    /**
+     * Test to see if project is initialized correctly
+     * @throws Exception if project is not initialized correctly
+     */
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.

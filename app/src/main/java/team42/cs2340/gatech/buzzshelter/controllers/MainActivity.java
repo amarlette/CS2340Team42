@@ -13,7 +13,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import team42.cs2340.gatech.buzzshelter.R;
 import team42.cs2340.gatech.buzzshelter.model.Model;
 
-
+/**
+ * Represents the main activity of the project
+ * @author ckadi
+ * @version 1.0
+ * @since 2/26/18
+ */
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView mStatusTextView;

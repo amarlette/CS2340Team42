@@ -12,6 +12,10 @@ public class UserContainer {
     public Integer age;
     // ... more attributes for db
 
+    /**
+     * Initializes the user container which contains information about the user
+     * @param user the user which is to be intialized
+     */
     public UserContainer(User user) {
         this.name = user.getName();
         this.email = user.getEmail();
@@ -20,6 +24,9 @@ public class UserContainer {
                 : ((user instanceof ShelterEmployee) ? "employee" : "basic");
     }
 
+    /**
+     * Empty constructor to initialize user
+     */
     public UserContainer() {
 
     }
