@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Information holder for a homeless shelter instance
+ * Information holder for a homeless shelter instance;
+ * Shelter objects always loaded from and created by database;
+ * Therefore, there is no full constructor implemented
  */
 public class Shelter {
     /** this shelter's firebase key */
@@ -175,30 +177,6 @@ public class Shelter {
 
     public boolean getAllowsYoungAdults() {
         return allowsYoungAdults;
-    }
-
-    /**
-     * Create a new shelter
-     * @param name          the shelter's name
-     * @param address       the shelter's address
-     * @param capacity      the shelter's capacity
-     * @param latitude      the shelter's latitude
-     * @param longitude     the shelter's longitude
-     * @param phone         the shelter's phone number
-     * @param restrictions  restrictions pertaining to the shelter
-     * @param notes         notes pertaining to the shelter
-     */
-    public Shelter(String name, String address, String capacity,
-                   String latitude, String longitude, String phone,
-                   String restrictions, String notes) {
-        this.name = name;
-        this.address = address;
-        this.capacity = capacity;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.phone = phone;
-        this.restrictions = restrictions;
-        this.notes = notes;
     }
 
     public Shelter() {
