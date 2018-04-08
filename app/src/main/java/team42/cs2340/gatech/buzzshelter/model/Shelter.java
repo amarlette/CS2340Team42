@@ -1,16 +1,14 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by ckadi on 2/25/2018.
+ * Information holder for a homeless shelter instance;
+ * Shelter objects always loaded from and created by database;
+ * Therefore, there is no full constructor implemented
  */
-
 public class Shelter {
     /** this shelter's firebase key */
     private String key;
@@ -23,6 +21,9 @@ public class Shelter {
 
     /** the shelter's capacity */
     private String capacity;
+
+    /** occupancy level for this shelter */
+    private String occupancy;
 
     /** the shelter's latitude */
     private String latitude;
@@ -45,6 +46,12 @@ public class Shelter {
     /**
      * @return the name
      */
+    private boolean allowsMen;
+    private boolean allowsChildren;
+    private boolean allowsWomen;
+    private boolean allowsNewborns;
+    private boolean allowsYoungAdults;
+
     public String getName() {
         return name;
     }
@@ -100,7 +107,8 @@ public class Shelter {
      */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-        getLocation().setLatitude(Double.parseDouble(latitude));
+        getLocation(); // create location if not exists
+        location.setLatitude(Double.parseDouble(latitude));
     }
 
     /**
@@ -116,7 +124,8 @@ public class Shelter {
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
-        getLocation().setLongitude(Double.parseDouble(longitude));
+        getLocation(); // create location if not exists
+        location.setLongitude(Double.parseDouble(longitude));
     }
 
     /**
@@ -190,27 +199,93 @@ public class Shelter {
     }
 
     /**
-     * Create a new shelter
-     * @param name          the shelter's name
-     * @param address       the shelter's address
-     * @param capacity      the shelter's capacity
-     * @param latitude      the shelter's latitude
-     * @param longitude     the shelter's longitude
-     * @param phone         the shelter's phone number
-     * @param restrictions  restrictions pertaining to the shelter
-     * @param notes         notes pertaining to the shelter
+     * @return the occupancy
      */
-    public Shelter(String name, String address, String capacity,
-                   String latitude, String longitude, String phone,
-                   String restrictions, String notes) {
-        this.name = name;
-        this.address = address;
-        this.capacity = capacity;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.phone = phone;
-        this.restrictions = restrictions;
-        this.notes = notes;
+    public String getOccupancy() {
+        return occupancy;
+    }
+
+    /**
+     * Set the occupancy
+     * @param occupancy to set
+     */
+    public void setOccupancy(String occupancy) {
+        this.occupancy = occupancy;
+    }
+
+    /**
+     * Set if the shelter allows children
+     * @param allowsChildren does the shelter allow children
+     */
+    public void setAllowsChildren(boolean allowsChildren) {
+        this.allowsChildren = allowsChildren;
+    }
+
+    /**
+     * Set if the shelter allows me
+     * @param allowsMen does the shelter allow men
+     */
+    public void setAllowsMen(boolean allowsMen) {
+        this.allowsMen = allowsMen;
+    }
+
+    /**
+     * Set if the shelter allows newborns
+     * @param allowsNewborns does the shelter allow newborns
+     */
+    public void setAllowsNewborns(boolean allowsNewborns) {
+        this.allowsNewborns = allowsNewborns;
+    }
+
+    /**
+     * Set if the shelter allows women
+     * @param allowsWomen does the shelter allow women
+     */
+    public void setAllowsWomen(boolean allowsWomen) {
+        this.allowsWomen = allowsWomen;
+    }
+
+    /**
+     * Set if the shelter allows young adults
+     * @param allowsYoungAdults does the shelter allow young adults
+     */
+    public void setAllowsYoungAdults(boolean allowsYoungAdults) {
+        this.allowsYoungAdults = allowsYoungAdults;
+    }
+
+    /**
+     * @return a boolean representing if the shelter allows men
+     */
+    public boolean getAllowsMen() {
+        return allowsMen;
+    }
+
+    /**
+     * @return a boolean representing if the shelter allows children
+     */
+    public boolean getAllowsChildren() {
+        return allowsChildren;
+    }
+
+    /**
+     * @return a boolean representing if the shelter allows women
+     */
+    public boolean getAllowsWomen() {
+        return allowsWomen;
+    }
+
+    /**
+     * @return a boolean representing if the shelter allows new borns
+     */
+    public boolean getAllowsNewborns() {
+        return allowsNewborns;
+    }
+
+    /**
+     * @return a boolean representing if the shelter allows young adults
+     */
+    public boolean getAllowsYoungAdults() {
+        return allowsYoungAdults;
     }
 
     /**
@@ -227,4 +302,29 @@ public class Shelter {
         return this.name + " @ " + this.address;
     }
     // TODO: functionality to add user to a shelter if space permits (reservation)
+
+    public int getVacancies() {
+        return Integer.parseInt(capacity) - Integer.parseInt(occupancy);
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("address", address);
+        result.put("occupancy", occupancy);
+        result.put("capacity", capacity);
+        result.put("latitude", latitude);
+        result.put("longitude", longitude);
+        result.put("phone", phone);
+        result.put("restrictions", restrictions);
+        result.put("notes", notes);
+        result.put("allowsChildren", allowsChildren);
+        result.put("allowsMen", allowsMen);
+        result.put("allowsWomen", allowsWomen);
+        result.put("allowsYoungAdults", allowsYoungAdults);
+        result.put("allowsNewborns", allowsNewborns);
+
+        return result;
+    }
+
 }

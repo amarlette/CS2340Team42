@@ -4,5 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/view_map" android:title="@string/view_map"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/sign_out" android:title="Sign Out"/>
+    <item android:id="@+id/view_shelters" android:title="@string/view_shelters"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/sign_out" android:title="@string/sign_out"/>
 </menu>

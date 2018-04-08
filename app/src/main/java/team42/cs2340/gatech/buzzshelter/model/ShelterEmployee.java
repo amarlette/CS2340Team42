@@ -1,12 +1,11 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 /**
- * Represents the admin user
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
+ * Represents a shelter employee user.
  */
 public class ShelterEmployee extends User {
+    //private Shelter shelter;
+
     /**
      * Initializes a new shelter employee
      * @param uid the shelter employee's user id
@@ -15,5 +14,19 @@ public class ShelterEmployee extends User {
      */
     public ShelterEmployee(String uid, String name, String email) {
         super(uid, name, email);
+
     }
+
+    /*
+    public ShelterEmployee(String uid, String name, String email, Shelter shelter) {
+        super(uid, name, email);
+        this.shelter = shelter;
+
+    }
+
+
+    public void changeShelterOccupancy() {}
+    public void changeShelterCapacity(){}
+
+    */
 }

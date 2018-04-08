@@ -29,12 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-/**
- * Represents the login interface
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
- */
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -106,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -116,7 +111,9 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if (task.getException().getClass().equals(FirebaseAuthInvalidUserException.class)) {
+                            if ((task.getException() != null)
+                                    && task.getException().getClass().
+                                    equals(FirebaseAuthInvalidUserException.class)) {
                                 Toast.makeText(LoginActivity.this, R.string.user_not_found,
                                         Toast.LENGTH_LONG).show();
                             } else {
@@ -155,7 +152,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().
+                getReference().child("users").child(userId);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -194,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (password.isEmpty() || (password.length() < 6)) {
             _passwordText.setError("must be at least 6 characters");
             valid = false;
         } else {

@@ -6,7 +6,6 @@ package team42.cs2340.gatech.buzzshelter.model;
  * @version 1.0
  * @since 2/26/18
  */
-
 public class AdminUser extends User {
     /**
      * Initializes the uid, name, and email of the admin user

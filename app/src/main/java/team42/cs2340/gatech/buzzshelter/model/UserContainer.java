@@ -10,6 +10,8 @@ public class UserContainer {
     public String role;
     public String gender;
     public Integer age;
+    public String currentShelter;
+    public Integer numReservations;
     // ... more attributes for db
 
     /**
@@ -19,13 +21,17 @@ public class UserContainer {
     public UserContainer(User user) {
         this.name = user.getName();
         this.email = user.getEmail();
-        this.role = user instanceof AdminUser
+        this.role = (AdminUser.class.equals(user.getClass()))
                 ? "admin"
-                : ((user instanceof ShelterEmployee) ? "employee" : "basic");
+                : (ShelterEmployee.class.equals(user.getClass()) ? "employee" : "basic");
+        if (BasicUser.class.equals(user.getClass())) {
+            this.currentShelter = ((BasicUser) user).getCurrentShelterId();
+            this.numReservations = ((BasicUser) user).getNumReservations();
+        }
     }
 
     /**
-     * Empty constructor to initialize user
+     * No arg constructor required by firebase
      */
     public UserContainer() {
 
