@@ -1,10 +1,7 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 /**
- * Represents the admin user
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
+ * Represents a user with administrative privileges
  */
 public class AdminUser extends User {
     /**

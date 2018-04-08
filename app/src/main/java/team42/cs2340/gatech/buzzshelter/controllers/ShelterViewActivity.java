@@ -15,7 +15,7 @@ import team42.cs2340.gatech.buzzshelter.model.Shelter;
 import team42.cs2340.gatech.buzzshelter.model.User;
 
 /**
- * Allows the user to view the shelter activity
+ * View a specific shelter's details
  */
 public class ShelterViewActivity extends AppCompatActivity {
     private Model model;

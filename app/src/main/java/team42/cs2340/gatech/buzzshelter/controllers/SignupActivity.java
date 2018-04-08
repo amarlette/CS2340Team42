@@ -37,10 +37,7 @@ import team42.cs2340.gatech.buzzshelter.model.User;
 import team42.cs2340.gatech.buzzshelter.model.UserContainer;
 
 /**
- * Represents the signup activity
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
+ * Create an account Screen
  */
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
