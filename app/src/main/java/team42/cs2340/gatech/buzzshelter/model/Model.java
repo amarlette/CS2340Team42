@@ -278,6 +278,6 @@ public final class Model {
     }
 
     public boolean isSignedOut() {
-        return currentUser == null || currentUser.getUid() == null;
+        return (currentUser == null) || (currentUser.getUid() == null);
     }
 }

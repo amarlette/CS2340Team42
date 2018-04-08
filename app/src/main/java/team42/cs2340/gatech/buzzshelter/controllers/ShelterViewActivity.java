@@ -19,7 +19,6 @@ public class ShelterViewActivity extends AppCompatActivity {
     @BindView(R.id.reservationLabel) TextView _reservationLabel;
     @BindView(R.id.make_reserve_button) Button _makeReservation;
     @BindView(R.id.cancel_reserve_button) Button _cancelReservation;
-    @BindView(R.id.status) TextView mStatusTextView;
     @BindView(R.id.detail) TextView mDetailTextView;
 
     @Override
