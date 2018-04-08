@@ -1,17 +1,14 @@
 package team42.cs2340.gatech.buzzshelter.model;
 
 /**
- * Represents the admin user
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
+ * An abstraction of a user of the application.
  */
 public abstract class User {
     /** user's key in user db table */
-    private String uid;
+    private final String uid;
 
-    private String name;
-    private String email;
+    private final String name;
+    private final String email;
 
     /**
      * Initializes a user
@@ -19,7 +16,7 @@ public abstract class User {
      * @param name the user's name
      * @param email the user's email
      */
-    public User(String uid, String name, String email) {
+    User(String uid, String name, String email) {
         this.uid = uid;
         this.name = name;
         this.email = email;

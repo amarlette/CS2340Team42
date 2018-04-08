@@ -3,15 +3,14 @@ package team42.cs2340.gatech.buzzshelter.controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import team42.cs2340.gatech.buzzshelter.R;
+import team42.cs2340.gatech.buzzshelter.model.BasicUser;
 import team42.cs2340.gatech.buzzshelter.model.Model;
+import team42.cs2340.gatech.buzzshelter.model.User;
 
 /**
  * Represents the main activity of the project
@@ -20,11 +19,12 @@ import team42.cs2340.gatech.buzzshelter.model.Model;
  * @since 2/26/18
  */
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
     private Model model;
+    private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         model = Model.getInstance();
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
-        mAuth = FirebaseAuth.getInstance();
-        if (model.getCurrentUser() == null) {
+        currentUser = model.getCurrentUser();
+        if (model.isSignedOut()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -42,14 +42,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (model.getCurrentUser() != null) {
-            mStatusTextView.setText(model.getCurrentUser().getEmail());
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, model.getCurrentUser().getUid()));
+        currentUser = model.getCurrentUser();
+        if (!model.isSignedOut()) {
+            String userType = currentUser.getClass().toString();
+
+            mStatusTextView.setText(currentUser.getEmail());
+            mDetailTextView.setText(getString(R.string.firebase_status_fmt, currentUser.getUid()));
             mDetailTextView.append("\n");
-            mDetailTextView.append(getString(R.string.welcome_user, model.getCurrentUser().getName()));
+            mDetailTextView.append(getString(R.string.welcome_user, currentUser.getName()));
 
             mDetailTextView.append("\nYou are a: ");
-            mDetailTextView.append(model.getCurrentUser().getClass().toString());
+            mDetailTextView.append(userType);
+
+            mDetailTextView.append("\n You currently have ");
+            if (currentUser.getClass().equals(BasicUser.class)) {
+                BasicUser user = (BasicUser) currentUser;
+                mDetailTextView.append(Integer.toString(user.getNumReservations()));
+                mDetailTextView.append(" reservations");
+                if (user.getNumReservations() > 0) {
+                    mDetailTextView.append(" at ");
+                    mDetailTextView.append(model.getShelterDictionary().
+                            get(user.getCurrentShelterId()).getName());
+                }
+            }
         }
     }
     @Override
@@ -74,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.sign_out) {
             signOut();
             return true;
+        }
+
+        if (id == R.id.view_shelters) {
+            startActivity(new Intent(this, ShelterListActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

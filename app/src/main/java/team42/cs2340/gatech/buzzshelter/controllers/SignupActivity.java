@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -88,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Signs user up for a new account
      */
-    public void signup() {
+    private void signup() {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
@@ -114,14 +115,15 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             _passwordText.getText().clear();
 
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            UserProfileChangeRequest profileUpdates
+                                    = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(name)
                                     .build();
 
@@ -134,16 +136,18 @@ public class SignupActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-                            HashMap<String, Object> userMap = new HashMap<>();
+                            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                                    .getReference().child("users");
+                            Map<String, Object> userMap = new HashMap<>();
 
                             User currentUser;
-                            if (_userType.getSelectedItem().equals("admin")) {
-                                currentUser = new AdminUser(mAuth.getCurrentUser().getUid(), name, email);
-                            } else if (_userType.getSelectedItem().equals("employee")) {
-                                currentUser = new ShelterEmployee(mAuth.getCurrentUser().getUid(), name, email);
+                            String uid = mAuth.getCurrentUser().getUid();
+                            if ("admin".equals(_userType.getSelectedItem())) {
+                                currentUser = new AdminUser(uid, name, email);
+                            } else if ("employee".equals(_userType.getSelectedItem())) {
+                                currentUser = new ShelterEmployee(uid, name, email);
                             } else {
-                                currentUser = new BasicUser(mAuth.getCurrentUser().getUid(), name, email);
+                                currentUser = new BasicUser(uid, name, email);
                             }
 
                             UserContainer userDetails = new UserContainer(currentUser);
@@ -154,7 +158,9 @@ public class SignupActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            if (task.getException().getClass().equals(FirebaseAuthUserCollisionException.class)) {
+                            if ((task.getException() != null)
+                                    && task.getException().getClass()
+                                    .equals(FirebaseAuthUserCollisionException.class)) {
                                 Toast.makeText(SignupActivity.this, R.string.user_exists,
                                         Toast.LENGTH_LONG).show();
                             } else {
@@ -191,14 +197,14 @@ public class SignupActivity extends AppCompatActivity {
      * Determines if credentials are valid
      * @return a boolean determining if the credentials are valid
      */
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
+        if (name.isEmpty() || (name.length() < 3)) {
             _nameText.setError("at least 3 characters");
             valid = false;
         } else {
@@ -212,7 +218,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (password.isEmpty() || (password.length() < 6)) {
             _passwordText.setError("Password must be at least 6 characters");
             valid = false;
         } else {
