@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BuzzShelter.iml" filepath="$PROJECT_DIR$/BuzzShelter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CS2340Team42.iml" filepath="$PROJECT_DIR$/CS2340Team42.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/CS2340Team42-app.iml" filepath="$PROJECT_DIR$/app/CS2340Team42-app.iml" />
+      <module fileurl="file://C:\Users\ckadi\Desktop\cs2340\BuzzShelter\CS2340Team42.iml" filepath="C:\Users\ckadi\Desktop\cs2340\BuzzShelter\CS2340Team42.iml" />
+      <module fileurl="file://C:\Users\ckadi\Desktop\cs2340\BuzzShelter\app\CS2340Team42-app.iml" filepath="C:\Users\ckadi\Desktop\cs2340\BuzzShelter\app\CS2340Team42-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

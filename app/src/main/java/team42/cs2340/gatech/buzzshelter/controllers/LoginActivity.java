@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * The Login Activity for the project
+ * Login Screen
  */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
