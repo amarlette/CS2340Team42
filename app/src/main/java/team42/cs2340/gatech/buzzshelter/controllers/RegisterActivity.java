@@ -37,10 +37,10 @@ import team42.cs2340.gatech.buzzshelter.model.User;
 import team42.cs2340.gatech.buzzshelter.model.UserContainer;
 
 /**
- * Create an account Screen
+ * 'Create an Account' Screen
  */
-public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+public class RegisterActivity extends AppCompatActivity {
+    private static final String TAG = "RegisterActivity";
 
     private FirebaseAuth mAuth;
     private Model model;
@@ -90,13 +90,13 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Sign-up");
 
         if (!validate()) {
-            onSignupFailed();
+            onRegisterFail();
             return;
         }
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this,
                 R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
@@ -129,7 +129,7 @@ public class SignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                onSignupSuccess();
+                                                onRegisterSuccess();
                                             }
                                         }
                                     });
@@ -158,13 +158,13 @@ public class SignupActivity extends AppCompatActivity {
                             if ((task.getException() != null)
                                     && task.getException().getClass()
                                     .equals(FirebaseAuthUserCollisionException.class)) {
-                                Toast.makeText(SignupActivity.this, R.string.user_exists,
+                                Toast.makeText(RegisterActivity.this, R.string.user_exists,
                                         Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(SignupActivity.this, R.string.user_create_fail,
+                                Toast.makeText(RegisterActivity.this, R.string.user_create_fail,
                                         Toast.LENGTH_SHORT).show();
                             }
-                            onSignupFailed();
+                            onRegisterFail();
                         }
                     }
 
@@ -173,9 +173,9 @@ public class SignupActivity extends AppCompatActivity {
 
 
     /**
-     * Sets result to okay
+     * Registration successful, end activity and proceed to MainActivity
      */
-    private void onSignupSuccess() {
+    private void onRegisterSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
@@ -184,7 +184,7 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Allows user to attempt to sign-up again
      */
-    private void onSignupFailed() {
+    private void onRegisterFail() {
         // Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
