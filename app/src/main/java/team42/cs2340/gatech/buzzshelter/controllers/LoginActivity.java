@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         _signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
+                // Start the Sign-up activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
+                // TODO: Implement successful sign-up logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Determines if login was a sucess
+     * Determines if login was a success
      * @param userId the user id belonging to a specified user
      */
     public void onLoginSuccess(String userId) {

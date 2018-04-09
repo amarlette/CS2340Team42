@@ -331,7 +331,7 @@ public final class Model {
     }
 
     /**
-     * @return a boolen if user as a reservation
+     * @return a boolean if user as a reservation
      */
     public boolean currentUserHasReservation() {
         return ((BasicUser) currentUser).hasReservation();

@@ -16,7 +16,7 @@ public class UserContainer {
 
     /**
      * Initializes the user container which contains information about the user
-     * @param user the user which is to be intialized
+     * @param user the user which is to be initialized
      */
     public UserContainer(User user) {
         this.name = user.getName();

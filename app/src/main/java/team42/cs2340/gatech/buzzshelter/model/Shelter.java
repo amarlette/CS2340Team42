@@ -87,7 +87,7 @@ public class Shelter {
     }
 
     /**
-     * Sets the capactiy
+     * Sets the capacity
      * @param capacity the capacity to set
      */
     public void setCapacity(String capacity) {
@@ -275,7 +275,7 @@ public class Shelter {
     }
 
     /**
-     * @return a boolean representing if the shelter allows new borns
+     * @return a boolean representing if the shelter allows newborns
      */
     public boolean getAllowsNewborns() {
         return allowsNewborns;
