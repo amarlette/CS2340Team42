@@ -30,7 +30,7 @@
             android:id="@+id/reservationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number of Reservations"/>
+            android:text="@string/num_reservations_default"/>
 
         <SeekBar
             android:id="@+id/numReservations"
@@ -71,7 +71,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Make New Reservation"
+                android:text="@string/make_reservation"
                 android:id="@+id/make_reserve_button"/>
             <View
                 android:layout_width="0dp"
@@ -80,7 +80,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel Existing Reservation"
+                android:text="@string/cancel_reservation"
                 android:id="@+id/cancel_reserve_button"/>
         </LinearLayout>
 

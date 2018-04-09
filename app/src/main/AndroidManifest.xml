@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".controllers.LoginActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".controllers.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".controllers.RegisterActivity"
+            android:theme="@style/AppTheme.Dark" />
         <activity android:name=".controllers.MapActivity"/>
         <activity android:name=".controllers.ShelterListActivity">
             <intent-filter>

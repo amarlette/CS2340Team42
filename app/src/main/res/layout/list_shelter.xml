@@ -16,7 +16,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="@string/search"
             android:id="@+id/search_shelter_button"/>
 
 
@@ -29,19 +29,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gender: "/>
+            android:text="@string/filter_cat_gender"/>
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/filter_male"
-            android:text="Male" />
+            android:text="@string/filter_male" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/filter_female"
-            android:text="Female"/>
+            android:text="@string/filter_female"/>
 
 
     </LinearLayout>
@@ -54,30 +54,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Age Range: "/>
+            android:text="@string/filter_cat_age_range"/>
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Newborns"
+            android:text="@string/filter_newborns"
             android:id="@+id/filter_newborns_checkbox"/>
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Children"
+            android:text="@string/filter_children"
             android:id="@+id/filter_children_checkbox"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Young Adults"
+            android:text="@string/filter_young_adults"
             android:id="@+id/filter_young_adults_checkbox"/>
 
     </LinearLayout>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anyone"
+        android:text="@string/filter_allow_all"
         android:id="@+id/filter_anyone"
         />
     <LinearLayout
@@ -87,7 +87,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filter"
+            android:text="@string/filter"
             android:id="@+id/filter_shelters_button"/>
         <View
             android:layout_width="0dp"
@@ -96,7 +96,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View Map"
+            android:text="@string/view_map"
             android:id="@+id/display_filtered_map"/>
     </LinearLayout>
 

@@ -5,8 +5,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="prompt_name">Name</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -28,10 +27,11 @@
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
     <string name="verify_email">Verify Email</string>
+    <string name="user_type">User Type</string>
     <string name="emailpassword_title_text">Email and Password</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
-    <string name="num_reservations">Number of Reservations (%d)</string>
     <string name="no_account_message">No account yet?  Create one</string>
+    <string name="yes_account_message">Already a member? Login</string>
     <string name="gt_logo_description">Georgia Tech Logo</string>
 
     <string name="map_api_key">AIzaSyACUTh4LKyNkAjW-hzpmpZzkgIrU8sxhZE</string>
@@ -43,5 +43,30 @@
         <item>admin</item>
     </string-array>
 
+    <string name="search">Search</string>
+
+    <!--Filter Conditions-->
+    <string name="filter">Filter</string>
+    <string name="filter_cat_gender">Gender: </string>
+    <string name="filter_cat_age_range">Age Range: </string>
+    <string name="filter_allow_all">Anyone</string>
+    <string name="filter_newborns">Newborns</string>
+    <string name="filter_children">Children</string>
+    <string name="filter_young_adults">Young Adults</string>
+    <string name="filter_male">Male</string>
+    <string name="filter_female">Female</string>
+
+
+    <!--Shelter Activity-->
+    <string name="num_reservations_default">Number of Reservations</string>
+    <string name="num_reservations">Number of Reservations (%d)</string>
+    <string name="make_reservation">Make Reservation</string>
+    <string name="cancel_reservation">Cancel Existing Reservation</string>
+
+    <!--Individual Shelter Card-->
+    <string name="shelter_name">Shelter Name: </string>
+    <string name="shelter_phone">Phone Number: </string>
+    <string name="show_shelter_name">Show Shelter Name</string>
+    <string name="show_shelter_number">Show Number</string>
 
 </resources>
