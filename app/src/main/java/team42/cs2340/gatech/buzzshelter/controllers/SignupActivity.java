@@ -175,7 +175,7 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Sets result to okay
      */
-    public void onSignupSuccess() {
+    private void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
@@ -184,7 +184,7 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Allows user to attempt to signup again
      */
-    public void onSignupFailed() {
+    private void onSignupFailed() {
         // Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
