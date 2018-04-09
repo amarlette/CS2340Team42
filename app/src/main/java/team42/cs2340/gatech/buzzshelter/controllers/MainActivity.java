@@ -13,10 +13,7 @@ import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.User;
 
 /**
- * Represents the main activity of the project
- * @author ckadi
- * @version 1.0
- * @since 2/26/18
+ * Landing Screen on Login Success
  */
 public class MainActivity extends AppCompatActivity {
     private TextView mStatusTextView;

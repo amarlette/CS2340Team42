@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * The Login Activity for the project
+ * Login Screen
  */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Method to log in user
      */
-    public void login() {
+    private void login() {
         if (!validate()) {
             onLoginFailed();
             return;
@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
      * Determines if login was a success
      * @param userId the user id belonging to a specified user
      */
-    public void onLoginSuccess(String userId) {
+    private void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().
@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Called when login has failed and allows the user to login again
      */
-    public void onLoginFailed() {
+    private void onLoginFailed() {
         _loginButton.setEnabled(true);
     }
 
@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
      * Determines if user login is valid
      * @return a boolean as to if the login is valid
      */
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
         String email = _emailText.getText().toString();
