@@ -289,7 +289,7 @@ public class Shelter {
     }
 
     /**
-     * Empty constructor to initialize shelter
+     * Empty constructor to initialize a Shelter
      */
     public Shelter() {
 

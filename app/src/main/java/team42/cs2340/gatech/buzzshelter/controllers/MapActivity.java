@@ -1,7 +1,11 @@
 package team42.cs2340.gatech.buzzshelter.controllers;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -26,13 +30,16 @@ import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.Shelter;
 
 /**
- * This shows how to create a simple activity with a map and a marker on the map.
+ * Map Screen containing Pins corresponding to Shelters
  */
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Model model;
     private Map<Marker, Shelter> markers;
     private GoogleMap targetMap;
     private List<Shelter> shelters;
+
+    private final float zoom = 13;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(final Marker marker) {
                 Log.d("MAP", markers.get(marker).toString());
-                targetMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
+                targetMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), zoom));
                 marker.showInfoWindow();
                 return true;
             }
@@ -86,6 +93,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             map.moveCamera(cu);
             map.animateCamera(cu);
+        }
+
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
     @Override

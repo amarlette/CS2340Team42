@@ -31,7 +31,7 @@ import team42.cs2340.gatech.buzzshelter.model.Model;
 import team42.cs2340.gatech.buzzshelter.model.Shelter;
 
 /**
- * The shelter list activity of the project
+ * Shelter List View
  */
 public class ShelterListActivity extends AppCompatActivity {
     private Model model;
