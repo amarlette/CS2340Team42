@@ -37,7 +37,7 @@ import team42.cs2340.gatech.buzzshelter.model.User;
 import team42.cs2340.gatech.buzzshelter.model.UserContainer;
 
 /**
- * Represents the signup activity
+ * Represents the sign-up activity
  * @author ckadi
  * @version 1.0
  * @since 2/26/18
@@ -90,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
      * Signs user up for a new account
      */
     private void signup() {
-        Log.d(TAG, "Signup");
+        Log.d(TAG, "Sign-up");
 
         if (!validate()) {
             onSignupFailed();
@@ -185,7 +185,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     /**
-     * Allows user to attempt to signup again
+     * Allows user to attempt to sign-up again
      */
     public void onSignupFailed() {
         // Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
