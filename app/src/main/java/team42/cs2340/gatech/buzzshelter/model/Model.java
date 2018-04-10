@@ -30,13 +30,15 @@ public final class Model {
     /** holds the current filtered list of shelters */
     private List<Shelter> filteredShelters;
 
+    //TODO: Remove public static after JUnit Demo
     /** the currently selected shelter, defaults to first shelter */
-    private Shelter currentShelter;
+    public static Shelter currentShelter;
 
+    //TODO: Remove static quantifier and add final
     /** access to database */
-    private final DatabaseReference mDatabase;
+    private static DatabaseReference mDatabase;
 
-    private final FirebaseAuth mAuth;
+    //private final FirebaseAuth mAuth;
 
     /**
      * Gets the instance of the model
@@ -55,41 +57,41 @@ public final class Model {
     private Model() {
         // TODO: read from database only if logged in
         // connect to and read from database
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-
-        DatabaseReference shelterRef = mDatabase.child("shelters");
-        shelterRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                shelters.remove(dataSnapshot.getKey());
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Shelter shelter = dataSnapshot.getValue(Shelter.class);
-                if (shelter != null) {
-                    shelter.setKey(dataSnapshot.getKey());
-                    shelters.put(shelter.getKey(), shelter);
-                }
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Shelter shelter = dataSnapshot.getValue(Shelter.class);
-                if (shelter != null) {
-                    shelter.setKey(dataSnapshot.getKey());
-                    shelters.put(shelter.getKey(), shelter);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        DatabaseReference shelterRef = mDatabase.child("shelters");
+//        shelterRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                shelters.remove(dataSnapshot.getKey());
+//            }
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+//                if (shelter != null) {
+//                    shelter.setKey(dataSnapshot.getKey());
+//                    shelters.put(shelter.getKey(), shelter);
+//                }
+//            }
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Shelter shelter = dataSnapshot.getValue(Shelter.class);
+//                if (shelter != null) {
+//                    shelter.setKey(dataSnapshot.getKey());
+//                    shelters.put(shelter.getKey(), shelter);
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
         shelters = new HashMap<>();
     }
 
@@ -223,41 +225,41 @@ public final class Model {
      * Set the current user based off of a data snapshot
      * @param dataSnapshot the data snapshot which is used to get the user
      */
-    public void setCurrentUser(DataSnapshot dataSnapshot) {
-        UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
-
-        if ((mAuth.getCurrentUser() == null) || (userDetails == null)) {
-            currentUser = new BasicUser(null, null, null);
-            return;
-        }
-
-        User user;
-        String uid = mAuth.getCurrentUser().getUid();
-
-        if ("admin".equals(userDetails.role)) {
-            user = new AdminUser(uid, userDetails.name, userDetails.email);
-        } else if ("employee".equals(userDetails.role)) {
-            user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
-        } else {
-            user = new BasicUser(uid, userDetails.name,
-                    userDetails.email, userDetails.currentShelter);
-            ((BasicUser) user).setCurrentShelterId(userDetails.currentShelter);
-            ((BasicUser) user).setNumReservations(userDetails.numReservations);
-        }
-        this.currentUser = user;
-    }
+//    public void setCurrentUser(DataSnapshot dataSnapshot) {
+//        UserContainer userDetails = dataSnapshot.getValue(UserContainer.class);
+//
+//        if ((mAuth.getCurrentUser() == null) || (userDetails == null)) {
+//            currentUser = new BasicUser(null, null, null);
+//            return;
+//        }
+//
+//        User user;
+//        String uid = mAuth.getCurrentUser().getUid();
+//
+//        if ("admin".equals(userDetails.role)) {
+//            user = new AdminUser(uid, userDetails.name, userDetails.email);
+//        } else if ("employee".equals(userDetails.role)) {
+//            user = new ShelterEmployee(uid, userDetails.name, userDetails.email);
+//        } else {
+//            user = new BasicUser(uid, userDetails.name,
+//                    userDetails.email, userDetails.currentShelter);
+//            ((BasicUser) user).setCurrentShelterId(userDetails.currentShelter);
+//            ((BasicUser) user).setNumReservations(userDetails.numReservations);
+//        }
+//        this.currentUser = user;
+//    }
 
     /**
      * Signs the user out
      */
-    public void signoutUser() {
-        mAuth.signOut();
-        // invalidate user, clear shelter, implementation can be improved
-        // currentUser = new BasicUser(null, null, null);
-        currentUser = null;
-        currentShelter = null;
-        // currentShelter = new Shelter();
-    }
+//    public void signoutUser() {
+//        mAuth.signOut();
+//        // invalidate user, clear shelter, implementation can be improved
+//        // currentUser = new BasicUser(null, null, null);
+//        currentUser = null;
+//        currentShelter = null;
+//        // currentShelter = new Shelter();
+//    }
 
     /**
      * Sets the filtered shelters
@@ -297,12 +299,13 @@ public final class Model {
         }
     }
 
+    //TODO: change back to private
     /**
      * Decrement the shelter occupancy
      * @param shelter the shelter who's occupancy to decrement
      * @param step the amount to decrement by
      */
-    private void decrementShelterOccupancy(Shelter shelter, int step) {
+    public static void decrementShelterOccupancy(Shelter shelter, int step) {
         int occ = Integer.parseInt(shelter.getOccupancy());
         if ((occ - step) < 0) {
             throw new IllegalStateException("Occupancy cannot be negative!");
@@ -312,10 +315,10 @@ public final class Model {
             } else {
                 shelter.setOccupancy(Integer.toString(occ - step));
             }
-            DatabaseReference shelterRef = mDatabase.child("shelters");
+            //DatabaseReference shelterRef = mDatabase.child("shelters");
             Map<String, Object> childUpdates = new HashMap<>();
             childUpdates.put(shelter.getKey(), shelter.toMap());
-            shelterRef.updateChildren(childUpdates);
+            //shelterRef.updateChildren(childUpdates);
         }
     }
 

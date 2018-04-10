@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
-        model.signoutUser();
+//        model.signoutUser();
 //        Intent intent = new Intent(this, LoginActivity.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
 //                Intent.FLAG_ACTIVITY_CLEAR_TASK |

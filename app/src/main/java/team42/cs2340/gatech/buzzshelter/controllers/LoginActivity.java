@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                //login();
             }
         });
 
@@ -81,53 +81,53 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Method to log in user
      */
-    private void login() {
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        }
-
-        _loginButton.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
-
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-        // Authentication Logic
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
-                            progressDialog.dismiss();
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            _passwordText.getText().clear();
-                            onLoginSuccess(mAuth.getCurrentUser().getUid());
-                        } else {
-                            progressDialog.dismiss();
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if ((task.getException() != null)
-                                    && task.getException().getClass().
-                                    equals(FirebaseAuthInvalidUserException.class)) {
-                                Toast.makeText(LoginActivity.this, R.string.user_not_found,
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(LoginActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                            onLoginFailed();
-                        }
-                    }
-                });
-    }
+//    private void login() {
+//        if (!validate()) {
+//            onLoginFailed();
+//            return;
+//        }
+//
+//        _loginButton.setEnabled(false);
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+//                R.style.Theme_AppCompat_DayNight_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Authenticating...");
+//        progressDialog.show();
+//
+//        String email = _emailText.getText().toString();
+//        String password = _passwordText.getText().toString();
+//
+//        // Authentication Logic
+//
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
+//                            progressDialog.dismiss();
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "signInWithEmail:success");
+//                            _passwordText.getText().clear();
+//                            onLoginSuccess(mAuth.getCurrentUser().getUid());
+//                        } else {
+//                            progressDialog.dismiss();
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                            if ((task.getException() != null)
+//                                    && task.getException().getClass().
+//                                    equals(FirebaseAuthInvalidUserException.class)) {
+//                                Toast.makeText(LoginActivity.this, R.string.user_not_found,
+//                                        Toast.LENGTH_LONG).show();
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, R.string.auth_failed,
+//                                        Toast.LENGTH_SHORT).show();
+//                            }
+//                            onLoginFailed();
+//                        }
+//                    }
+//                });
+//    }
 
 
     @Override
@@ -152,24 +152,24 @@ public class LoginActivity extends AppCompatActivity {
      * Determines if login was a success
      * @param userId the user id belonging to a specified user
      */
-    private void onLoginSuccess(String userId) {
-        _loginButton.setEnabled(true);
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance().
-                getReference().child("users").child(userId);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                model.setCurrentUser(dataSnapshot);
-                finish();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
-    }
+//    private void onLoginSuccess(String userId) {
+//        _loginButton.setEnabled(true);
+//
+//        DatabaseReference userRef = FirebaseDatabase.getInstance().
+//                getReference().child("users").child(userId);
+//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                model.setCurrentUser(dataSnapshot);
+//                finish();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     /**
      * Called when login has failed and allows the user to login again
