@@ -40,10 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Model model;
 
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
+     @BindView(R.id.input_email) EditText _emailText;
+     @BindView(R.id.input_password) EditText _passwordText;
+     @BindView(R.id.btn_login) Button _loginButton;
+     @BindView(R.id.link_signup) TextView _signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
