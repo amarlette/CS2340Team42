@@ -64,14 +64,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="@string/sign_out" />
+                android:text="@string/sign_out"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/verify_email_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="@string/verify_email" />
+                android:text="@string/verify_email"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
 
