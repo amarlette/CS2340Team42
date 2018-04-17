@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
      @BindView(R.id.input_password) EditText _passwordText;
      @BindView(R.id.btn_login) Button _loginButton;
      @BindView(R.id.link_signup) TextView _signupLink;
+     @BindView(R.id.forgot_password) TextView _forgotPasswordLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,15 @@ public class LoginActivity extends AppCompatActivity {
                 // Start the Sign-up activity
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
+
+        _forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivityForResult(intent, 0);
+
             }
         });
     }
