@@ -41,6 +41,7 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".controllers.ShelterViewActivity"/>
+        <activity android:name=".controllers.ForgotPasswordActivity"/>
     </application>
 
 </manifest>

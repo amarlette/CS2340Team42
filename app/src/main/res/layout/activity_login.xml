@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/prompt_password"/>
+
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -55,13 +56,21 @@
             android:padding="12dp"
             android:text="@string/sign_in"/>
 
-        <TextView android:id="@+id/link_signup"
+        <TextView
+            android:id="@+id/link_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="@string/no_account_message"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:textSize="16sp"/>
+            android:text="@string/no_account_message"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/forgot_password" />
 
     </LinearLayout>
 </ScrollView>

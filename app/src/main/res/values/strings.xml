@@ -33,6 +33,7 @@
     <string name="no_account_message">No account yet?  Create one</string>
     <string name="yes_account_message">Already a member? Login</string>
     <string name="gt_logo_description">Georgia Tech Logo</string>
+    <string name="forgot_password">Forgot Password?</string>
 
     <string name="map_api_key">AIzaSyACUTh4LKyNkAjW-hzpmpZzkgIrU8sxhZE</string>
     <string name="view_map">View Map</string>
@@ -68,5 +69,11 @@
     <string name="shelter_phone">Phone Number: </string>
     <string name="show_shelter_name">Show Shelter Name</string>
     <string name="show_shelter_number">Show Number</string>
+
+
+    <!--Forgot Password Activity-->
+    <string name = "forgot_password_title">Enter the email you signed up with and we\'ll send
+        you an email to reset your password</string>
+    <string name="reset_password_button">Send Reset Link</string>
 
 </resources>
