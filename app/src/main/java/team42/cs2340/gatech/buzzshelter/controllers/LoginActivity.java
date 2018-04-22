@@ -30,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Login Screen
+ */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -37,10 +40,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Model model;
 
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
+     @BindView(R.id.input_email) EditText _emailText;
+     @BindView(R.id.input_password) EditText _passwordText;
+     @BindView(R.id.btn_login) Button _loginButton;
+     @BindView(R.id.link_signup) TextView _signupLink;
+     @BindView(R.id.forgot_password) TextView _forgotPasswordLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,18 @@ public class LoginActivity extends AppCompatActivity {
         _signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                // Start the Sign-up activity
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
+
+        _forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivityForResult(intent, 0);
+
             }
         });
     }
@@ -75,7 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login() {
+    /**
+     * Method to log in user
+     */
+    private void login() {
         if (!validate()) {
             onLoginFailed();
             return;
@@ -98,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && (mAuth.getCurrentUser() != null)) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -108,7 +124,9 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if (task.getException().getClass().equals(FirebaseAuthInvalidUserException.class)) {
+                            if ((task.getException() != null)
+                                    && task.getException().getClass().
+                                    equals(FirebaseAuthInvalidUserException.class)) {
                                 Toast.makeText(LoginActivity.this, R.string.user_not_found,
                                         Toast.LENGTH_LONG).show();
                             } else {
@@ -127,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
+                // TODO: Implement successful sign-up logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
@@ -140,10 +158,15 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess(String userId) {
+    /**
+     * Determines if login was a success
+     * @param userId the user id belonging to a specified user
+     */
+    private void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().
+                getReference().child("users").child(userId);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -158,11 +181,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void onLoginFailed() {
+    /**
+     * Called when login has failed and allows the user to login again
+     */
+    private void onLoginFailed() {
         _loginButton.setEnabled(true);
     }
 
-    public boolean validate() {
+    /**
+     * Determines if user login is valid
+     * @return a boolean as to if the login is valid
+     */
+    private boolean validate() {
         boolean valid = true;
 
         String email = _emailText.getText().toString();
@@ -175,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (password.isEmpty() || (password.length() < 6)) {
             _passwordText.setError("must be at least 6 characters");
             valid = false;
         } else {
