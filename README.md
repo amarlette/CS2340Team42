@@ -5,8 +5,7 @@
 ..<stephanie.almeida@gatech.edu>
 * Tiffany Hsieh
 ..<tiffanyxhsieh@gmail.com> 
-* Chidambaram Kadiresan
-..<ckadiresan@gatech.edu>
+* chikad
 * Ji Kim
 ..<gkim@gatech.edu>
 * Alexandra Marlette
